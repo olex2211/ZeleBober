@@ -2,32 +2,33 @@ from rest_framework.generics import (
     ListAPIView, RetrieveAPIView,
     CreateAPIView, UpdateAPIView, DestroyAPIView
     )
-from .models import CustomUser
+from django.contrib.auth import get_user_model
 from .serializers import UserSerializer
 
+User = get_user_model()
 
 class UserCreateAPIView(CreateAPIView):
-    queryset = CustomUser.objects.all()
+    queryset = User.objects.all()
     serializer_class = UserSerializer
     
     
 class UserRetrieveAPIView(RetrieveAPIView):
-    queryset = CustomUser.objects.all()
+    queryset = User.objects.all()
     serializer_class = UserSerializer
     
 
 class UserListAPIView(ListAPIView):
-    queryset = CustomUser.objects.all()
+    queryset = User.objects.all()
     serializer_class = UserSerializer
     
 
 class UserUpdateAPIView(UpdateAPIView):
-    queryset = CustomUser.objects.all()
+    queryset = User.objects.all()
     serializer_class = UserSerializer
 
 
 class UserDestroyAPIView(DestroyAPIView):
-    queryset = CustomUser.objects.all()
+    queryset = User.objects.all()
     serializer_class = UserSerializer
 
 

@@ -2,7 +2,7 @@ from django.conf import settings
 from django.db import models
 
 class Chat(models.Model):
-    users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='chats')
+    members = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='chats')
     title = models.CharField(max_length=50)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -13,7 +13,7 @@ class Chat(models.Model):
 
 
 class Message(models.Model):
-    user = None
+    author = None
     likes = None
     text = models.CharField(max_length=300)
     answer = models.BooleanField(default=False)
@@ -26,9 +26,9 @@ class Message(models.Model):
 
 
 class ChatMessage(Message):
-    chat = models.ForeignKey(Chat, on_delete=models.CASCADE, related_name='messages')
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='messages')
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='messages')
     likes = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='liked_messages')
+    chat = models.ForeignKey(Chat, on_delete=models.CASCADE, related_name='messages')
 
     
     class Meta:

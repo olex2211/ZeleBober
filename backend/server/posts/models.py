@@ -4,12 +4,12 @@ from chats.models import Message
 
 
 class Post(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='posts')
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='posts')
     description = models.TextField(max_length=2000)
     likes = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='liked_posts')
-    # photo = models.CharField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    # photo = models.CharField()
     
 
     class Meta:
@@ -17,6 +17,8 @@ class Post(models.Model):
 
 
 class Comment(Message):
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='comments')
+    likes = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='liked_comments')
     post = models.ForeignKey(Post, on_delete=models.CASCADE,  related_name='comments')
 
     

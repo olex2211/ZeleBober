@@ -4,9 +4,9 @@ from . import views
 urlpatterns = [
     path('', views.user_list_view, name='user-list'),
     path('<int:pk>/', views.user_retrieve_view, name='user-detail'),
-    # path('login/', get),
     path('registration/', views.user_create_view, name='user-create'),
 ]
+    # path('login/', get),
 
 # user_list_view = UserListAPIView.as_view()
 # user_retrieve_view = UserRetrieveAPIView.as_view()
