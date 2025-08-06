@@ -7,7 +7,7 @@ from django.db.models import OuterRef, Subquery
 from django.shortcuts import get_object_or_404
 from .models import Chat, ChatMessage
 from .serializers import ChatSerializer, ChatMessageSerializer
-from .permissions import IsMember
+from .permissions import IsMember, BelongsToChat
 
 
 class ChatListAPIView(ListAPIView):
@@ -26,11 +26,11 @@ class ChatListAPIView(ListAPIView):
 
 class ChatMessageListAPIView(ListAPIView):
     serializer_class = ChatMessageSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, BelongsToChat]
 
     def get_queryset(self):
         chat = get_object_or_404(Chat, pk=self.kwargs['pk'])
-        return ChatMessage.objects.filter(chat=chat)
+        return chat.messages.all()
 
 
 class ChatCreateAPIView(CreateAPIView):
@@ -39,6 +39,15 @@ class ChatCreateAPIView(CreateAPIView):
 
     # def get_queryset(self):
     #     return Chat.objects.all()
+
+
+
+
+
+
+
+
+
 
 
 class ChatUpdateAPIView(UpdateAPIView):

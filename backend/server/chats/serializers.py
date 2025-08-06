@@ -11,4 +11,10 @@ class ChatSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Chat
-        fields = '__all__'
+        fields = ['id', 'title', 'members', 'created_at', 'updated_at', 'last_message']
+        read_only_fields = ['created_at', 'updated_at', 'members', 'last_message']
+
+    def create(self, validated_data):
+        chat = Chat.objects.create(**validated_data)
+        chat.members.add(self.context['request'].user)
+        return chat

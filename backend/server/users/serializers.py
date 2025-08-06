@@ -4,7 +4,7 @@ from django.contrib.auth.password_validation import validate_password
 
 User = get_user_model()
 
-class UserSerializer(serializers.HyperlinkedModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(
         write_only=True,
         required=True,
@@ -13,12 +13,14 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = User
-        fields = ['id', 'url', 'username', 'password', 'email', 'first_name', 'last_name', 'last_login', 'date_joined']
+        fields = ['id', 'username', 'password', 'email', 'first_name', 'last_name', 'last_login', 'date_joined']
         extra_kwargs = {
             'username': {'required': True},
             'email': {'required': True},
             'first_name': {'required': True},
             'last_name': {'required': True},
+            'last_login': {'read_only': True},
+            'date_joined': {'read_only': True},
         }
 
     def create(self, validated_data):
