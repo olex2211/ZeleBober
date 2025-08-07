@@ -5,7 +5,7 @@ const AuthContext = createContext(undefined);
 
 export default AuthContext;
 
-// export const useAuth = () => {
+// export function useAuth(){
 //     const authContext = useContext(AuthContext);
 
 //     if(!authContext){
@@ -87,13 +87,12 @@ export const AuthProvider = ({children}) =>{
         user,
         accessToken,
         login,
-        updateToken,
+        // updateToken,
     }
 
     return(
         <AuthContext.Provider value={contextData} >
             {children}
         </AuthContext.Provider>
-
     )
 }

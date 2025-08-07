@@ -1,8 +1,18 @@
-import { useContext } from "react"
-import AuthContext from "../context/AuthContext"
+import { useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import AuthContext from "../context/AuthContext";
 
 export default function LoginPage() {
-    let {login} = useContext(AuthContext)
+    const {login, user} = useContext(AuthContext);
+
+    // const navigate = useNavigate();
+
+    // useEffect(() => {
+    //     if (user) {
+    //         navigate("/", { replace: true });
+    //     }
+    // }, [user, navigate]);
+
     return(
         <>
             <form onSubmit={login}>

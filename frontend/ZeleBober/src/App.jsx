@@ -6,10 +6,21 @@ import PrivateRoute from "./utils/PrivateRoute";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 
-
-
 export default function App() {
-  // const [data, setData] = useState([])
+    return (
+    <>
+      <BrowserRouter>
+        <Routes>
+          <Route element={<PrivateRoute/>}>
+            <Route path="/" element={<HomePage />} />
+          </Route>
+          <Route path="/login" element={<LoginPage />} />
+        </Routes>
+      </BrowserRouter>
+    </>
+  )
+}
+// const [data, setData] = useState([])
 
   // useEffect(() => {
   //   async function fetchData() {
@@ -68,16 +79,3 @@ export default function App() {
   // }
 
 
-  return (
-    <>
-      <BrowserRouter>
-        <Routes>
-          <Route element={<PrivateRoute/>}>
-            <Route path="/" element={<HomePage />} />
-          </Route>
-          <Route path="/login" element={<LoginPage />} />
-        </Routes>
-      </BrowserRouter>
-    </>
-  )
-}
