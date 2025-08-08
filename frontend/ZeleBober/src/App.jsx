@@ -1,81 +1,24 @@
-// import './App.css'
-import { BrowserRouter, Routes, Route} from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import PrivateRoute from "./utils/PrivateRoute";
-
-// import { useEffect, useState } from "react"
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
+import { AuthProvider } from "./context/AuthContext.jsx";
+import RegistrationPage from "./pages/RegistrationPage.jsx";
 
 export default function App() {
-    return (
+  return (
     <>
       <BrowserRouter>
-        <Routes>
-          <Route element={<PrivateRoute/>}>
-            <Route path="/" element={<HomePage />} />
-          </Route>
-          <Route path="/login" element={<LoginPage />} />
-        </Routes>
+        <AuthProvider>
+          <Routes>
+            <Route element={<PrivateRoute />}>
+              <Route path="/" element={<HomePage />} />
+            </Route>
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/registration" element={<RegistrationPage />} />
+          </Routes>
+        </AuthProvider>
       </BrowserRouter>
     </>
-  )
+  );
 }
-// const [data, setData] = useState([])
-
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     console.log(import.meta.env.VITE_API_URL);
-
-  //     try{
-  //       const response = await fetch(`${import.meta.env.VITE_API_URL}posts/2/`)
-  //       if(!response.ok){
-  //         throw new Error("response is not ok");
-  //       }
-  //       const result = await response.json();
-  //       console.log(result);
-  //       setData(result);
-  //     } catch(error){
-  //       console.log(error);
-  //     }
-  //   }
-
-  //   // fetchData()
-    
-  // }, [])
-
-  // //////////////////////////////////////
-
-  // const userData = {
-  //   username: 'YaPidor',
-  //   password: 'Pidaras',
-  //   first_name: 'Hitler',
-  //   last_name: 'Kaput',
-  //   email: 'Svastikaonelove@gmail.com',
-  // };
-
-  // const acces = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU0MzM2MjQxLCJpYXQiOjE3NTQzMzU5NDEsImp0aSI6ImY5NTBkM2I0ODRlZDQ2NmE4MzYyNTc1NmVmZTEwZTUxIiwidXNlcl9pZCI6IjEifQ.OX1q62BhMxHKhTKrPsPsJZKMJOcsmDh7w4xe0IQaZiY";
-
-  // async function sendUserData() {
-  //  try {
-  //     const response = await fetch(`http://localhost:8000/api/posts/`, {
-  //       method: 'GET',
-  //       headers: {
-  //         'Authorization': `Bearer ${acces}`,
-  //         'Content-Type': 'application/json',
-  //       },
-  //       // body: JSON.stringify(userData),
-  //     });
-
-  //     if (!response.ok) {
-  //       throw new Error('Помилка ');
-  //     }
-
-  //     const result = await response.json();
-  //     console.log(result);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-    
-  // }
-
-
