@@ -32,13 +32,14 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  async function updateToken() {
+  async function refreshToken() {
     const response = await fetchRefresh();
+    // console.log(response);
     if (response.ok) {
       const data = await response.json();
       setAccessToken(data.access);
       localStorage.setItem("accessToken", data.access);
-      setUser(jwtDecode(data.access)); 
+      setUser(jwtDecode(data.access));
       return {
         success: true,
       };
@@ -50,7 +51,7 @@ export const AuthProvider = ({ children }) => {
     user,
     login,
     register,
-    updateToken,
+    refreshToken,
   };
 
   return (
@@ -61,6 +62,7 @@ export const AuthProvider = ({ children }) => {
 };
 
 export default AuthContext;
+
 
   // async function login({ username, password }) {
   //   try {

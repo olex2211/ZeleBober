@@ -1,8 +1,8 @@
-import { useContext, useEffect, useState } from "react";
-import AuthContext from "../context/AuthContext";
+import {useEffect, useState } from "react";
+import useAuth from "../context/useAuth";
 
 export default function HomePage() {
-    const {accessToken} = useContext(AuthContext);
+    const {accessToken} = useAuth();
     const [posts, setPosts] = useState([]);
     
     useEffect(() => {

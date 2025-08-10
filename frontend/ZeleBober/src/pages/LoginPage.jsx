@@ -1,9 +1,8 @@
-import { useContext } from "react";
-import AuthContext from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import useAuth from "../context/useAuth";
 
 export default function LoginPage() {
-  const { login } = useContext(AuthContext);
+  const { login } = useAuth();
   const navigate = useNavigate();
 
   async function handleLogin (e) {

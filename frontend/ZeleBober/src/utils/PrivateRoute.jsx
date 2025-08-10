@@ -1,12 +1,16 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { useContext } from "react";
-import AuthContext from "../context/AuthContext";
+import useAuth from "../context/useAuth";
 
 const PrivateRoute = () => {
-  const { accessToken } = useContext(AuthContext);
+  const { accessToken, user, refreshToken} = useAuth();
+
   if (!accessToken) {
     return <Navigate to="/login" replace />;
+  } else if (user.exp <= Math.floor(Date.now() / 1000)) {
+    console.log("refresh");
+    await refreshToken();
   }
+
   return <Outlet />;
 };
 

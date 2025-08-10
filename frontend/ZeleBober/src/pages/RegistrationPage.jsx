@@ -1,9 +1,8 @@
-import { useContext } from "react";
-import AuthContext from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import useAuth from "../context/useAuth";
 
 export default function RegistrationPage() {
-  const { login, register } = useContext(AuthContext);
+  const { login, register } = useAuth();
   const navigate = useNavigate();
 
   async function handleRegistration(e) {

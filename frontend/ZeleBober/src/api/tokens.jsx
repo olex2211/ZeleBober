@@ -8,14 +8,25 @@ export async function fetchToken({ username, password }) {
             username: username,
             password: password,
         }),
+        credentials: 'include',
     });
 }
 
 export async function fetchRefresh() {
-    return await fetch(`${import.meta.env.VITE_API_URL}token/refresh/`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-    });
+    try{
+        const response = await fetch(`${import.meta.env.VITE_API_URL}token/refresh/`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            credentials: 'include',
+            
+        });
+        console.log(response);
+        return response;
+    } catch (error) {
+        console.error("Error refreshing token:", error);
+        return null;
+    }
+    
 }
