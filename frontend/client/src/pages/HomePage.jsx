@@ -1,33 +1,36 @@
 import {useEffect, useState } from "react";
+import { fetchUsers } from "../api/users";
 import useAuth from "../context/useAuth";
+import Header from "../components/header/header";
 
 export default function HomePage() {
-    const {accessToken} = useAuth();
+    const {authFetch} = useAuth();
     const [posts, setPosts] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
     
     useEffect(() => {
-        async function fetchPosts() {
-            try {
-                const response = await fetch(`${import.meta.env.VITE_API_URL}users/`, {
-                    method: "GET",
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${accessToken}`,
-                    },
-                });
-                
-                const data = await response.json();
-                setPosts(data);
-            } catch (error) {
-                console.error(error);
+        async function getData() {
+            const response = await authFetch(fetchUsers);
+            if (response) {
+                setPosts(await response.json());
             }
+            setIsLoading(false);
         }
 
-        fetchPosts();
-    }, []);
+        getData();
+    }, [authFetch]);
+
+    if (isLoading) {
+        return (
+            <>
+                <div>LOADING</div>
+            </>
+        )
+    }
 
     return (
         <>
+            <Header />
             <ul>
             {posts.map((post, index) => (
                 <li key={post.id || index} style={{ marginBottom: '10px' }}>
