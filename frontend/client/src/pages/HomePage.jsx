@@ -1,7 +1,9 @@
 import {useEffect, useState } from "react";
 import { fetchUsers } from "../api/users";
 import useAuth from "../context/useAuth";
-import Header from "../components/header/header";
+import HomeContainer from "../components/containers/HomeContainer"
+import MainContainer from "../components/containers/MainContainer"
+import SideBar from "../components/SideBar/SideBar"
 
 export default function HomePage() {
     const {authFetch} = useAuth();
@@ -29,11 +31,13 @@ export default function HomePage() {
     }
 
     return (
-        <>
-            <Header />
+      <>
+        <HomeContainer>
+          <SideBar />
+          <MainContainer>
             <ul>
             {posts.map((post, index) => (
-                <li key={post.id || index} style={{ marginBottom: '10px' }}>
+                <li key={post.id || index} style={{ marginBottom: "10px" }}>
                 <ul>
                     {Object.entries(post).map(([key, value]) => (
                     <li key={key}>
@@ -44,6 +48,10 @@ export default function HomePage() {
                 </li>
             ))}
             </ul>
-        </>
+          </MainContainer>
+        </HomeContainer>
+
+
+      </>
     );
 } 

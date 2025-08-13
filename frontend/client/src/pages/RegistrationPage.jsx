@@ -3,39 +3,39 @@ import useAuth from "../context/useAuth";
 import { useState } from "react";
 
 export default function RegistrationPage() {
-  const { login, register } = useAuth();
-  const [errorMessages, setErrorMessages] = useState([]);
-  const navigate = useNavigate();
+const { login, register } = useAuth();
+const [errorMessages, setErrorMessages] = useState([]);
+const navigate = useNavigate();
 
-  async function handleRegistration(e) {
+async function handleRegistration(e) {
     e.preventDefault();
     const formData = Object.fromEntries(new FormData(e.target));
 
     try {
-      const registrationResponse = await register(formData);
-      const loginResponse = await login(formData);
-      navigate("/", { replace: true });
+        const registrationResponse = await register(formData);
+        const loginResponse = await login(formData);
+        navigate("/", { replace: true });
     }
-    catch (error) {
-      setErrorMessages(error.body);
+        catch (error) {
+        setErrorMessages(error.body);
     }
-  }
-
-  return (
-    <>
-      <form onSubmit={handleRegistration}>
-        <p className="text-red-800">{errorMessages?.username}</p>
-        <input type="text" name="username" placeholder="username" />
-        <p className="text-red-800">{errorMessages?.password}</p>
-        <input type="text" name="password" placeholder="password" />
-        <p className="text-red-800">{errorMessages?.first_name}</p>
-        <input type="text" name="first_name" placeholder="first name" />
-        <p className="text-red-800">{errorMessages?.last_name}</p>
-        <input type="text" name="last_name" placeholder="last name" />
-        <p className="text-red-800">{errorMessages?.email}</p>
-        <input type="text" name="email" placeholder="email" />
-        <button type="submit">Register</button>
-      </form>
-    </>
-  );
+}
+  
+return (
+  <>
+    <form onSubmit={handleRegistration}>
+      <p className="text-red-800">{errorMessages?.username}</p>
+      <input type="text" name="username" placeholder="username" />
+      <p className="text-red-800">{errorMessages?.password}</p>
+      <input type="text" name="password" placeholder="password" />
+      <p className="text-red-800">{errorMessages?.first_name}</p>
+      <input type="text" name="first_name" placeholder="first name" />
+      <p className="text-red-800">{errorMessages?.last_name}</p>
+      <input type="text" name="last_name" placeholder="last name" />
+      <p className="text-red-800">{errorMessages?.email}</p>
+      <input type="text" name="email" placeholder="email" />
+      <button type="submit">Register</button>
+    </form>
+  </>
+);
 }

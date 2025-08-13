@@ -8,7 +8,7 @@ export async function fetchToken({ username, password }) {
             username: username,
             password: password,
         }),
-        credentials: 'include',
+        credentials: "include",
     });
 
     if (!response.ok) {
@@ -16,7 +16,7 @@ export async function fetchToken({ username, password }) {
             message: `API fetch token pair error`,
             status: response.status,
             statusText: response.statusText,
-            body: await response.json()
+            body: await response.json(),
         };
     }
 
@@ -24,20 +24,23 @@ export async function fetchToken({ username, password }) {
 }
 
 export async function fetchRefresh() {
-    const response = await fetch(`${import.meta.env.VITE_API_URL}token/refresh/`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        credentials: 'include',
-    });
+    const response = await fetch(
+        `${import.meta.env.VITE_API_URL}token/refresh/`,
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            credentials: "include",
+        }
+    );
 
     if (!response.ok) {
         throw {
             message: `API fetch refresh token error`,
             status: response.status,
             statusText: response.statusText,
-            body: await response.json()
+            body: await response.json(),
         };
     }
 
@@ -45,20 +48,23 @@ export async function fetchRefresh() {
 }
 
 export async function fetchBlacklist() {
-    const response = await fetch(`${import.meta.env.VITE_API_URL}token/blacklist/`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        credentials: 'include',
-    });
+    const response = await fetch(
+        `${import.meta.env.VITE_API_URL}token/blacklist/`,
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            credentials: "include",
+        }
+    );
 
     if (!response.ok) {
         throw {
             message: `API fetch blacklist token error`,
             status: response.status,
             statusText: response.statusText,
-            body: await response.json()
+            body: await response.json(),
         };
     }
 

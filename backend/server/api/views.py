@@ -12,12 +12,11 @@ class TokenView(TokenObtainPairView):
         response.data.pop('refresh', None)
         return response
 
-
 class RefreshTokenView(TokenRefreshView):
     def post(self, request, *args, **kwargs):
         refresh_token = request.COOKIES.get('refresh')
         request.data.update({'refresh': refresh_token})
-        return super().post(request, *args, **kwargs)
+        return super().post(request,    *args, **kwargs)
 
 
 class BlacklistTokenView(TokenBlacklistView):
