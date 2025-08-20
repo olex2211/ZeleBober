@@ -1,12 +1,19 @@
 import { Navigate, Outlet } from "react-router-dom";
 import useAuth from "../context/useAuth";
+import Loading from "../components/Loading/Loading"
+
 
 const PrivateRoute = () => {
-    const { user } = useAuth();
+    const { decodedToken, user } = useAuth();
 
-    if (!user) {
+    if (!decodedToken) {
         return <Navigate to="/login" replace />;
     }
+
+    if (user === null) {
+        return <Loading/>;
+    }
+
     return <Outlet />;
 };
 

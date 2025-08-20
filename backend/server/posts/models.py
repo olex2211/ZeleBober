@@ -9,7 +9,7 @@ class Post(models.Model):
     likes = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='liked_posts')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    # photo = models.CharField()
+    photo = models.ImageField(upload_to="uploads/posts/", blank=True, null=True)
     
 
     class Meta:

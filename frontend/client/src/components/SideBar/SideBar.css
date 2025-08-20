@@ -1,16 +1,23 @@
-@import "tailwindcss";
-
 .sidebar-container {
     display: flex;
     flex-direction: column;
-    width: 280px;
+    width: 16%;
     min-height: 100%;
     border-right: 1px solid rgb(210, 210, 210);
     padding: 12px;
 }
 
 .logo-container {
-    font-size: 2rem;
+    display: flex;
+    column-gap: 10px;
+    margin: 16px;
+    height: 27px;
+}
+
+.logo-container img {
+    display: flex;
+    height: 100%;
+    object-fit: contain;
 }
 
 .nav-container {

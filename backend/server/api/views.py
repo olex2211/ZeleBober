@@ -1,3 +1,4 @@
+from django.conf import settings
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView, TokenBlacklistView
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
@@ -8,7 +9,12 @@ class TokenView(TokenObtainPairView):
         response = super().post(request, *args, **kwargs)
         refresh = response.data.get('refresh')
         if refresh:
-            response.set_cookie(key='refresh', value=refresh, httponly=True) # samesite='None', secure=True,
+            response.set_cookie(
+                key='refresh',
+                value=refresh,
+                httponly=True,
+                max_age=settings.SIMPLE_JWT["REFRESH_TOKEN_LIFETIME"]
+            ) # samesite='None', secure=True,
         response.data.pop('refresh', None)
         return response
 
@@ -16,7 +22,7 @@ class RefreshTokenView(TokenRefreshView):
     def post(self, request, *args, **kwargs):
         refresh_token = request.COOKIES.get('refresh')
         request.data.update({'refresh': refresh_token})
-        return super().post(request,    *args, **kwargs)
+        return super().post(request, *args, **kwargs)
 
 
 class BlacklistTokenView(TokenBlacklistView):

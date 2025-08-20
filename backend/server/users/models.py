@@ -34,6 +34,8 @@ class User(AbstractUser):
         },
     )
 
+    photo = models.ImageField(upload_to="uploads/users/", blank=True, null=True)
+
     REQUIRED_FIELDS = []
     
     class Meta:

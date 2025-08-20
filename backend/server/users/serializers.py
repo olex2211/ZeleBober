@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
+from posts.serializers import PostSerializer
 
 User = get_user_model()
 
@@ -10,10 +11,10 @@ class UserSerializer(serializers.ModelSerializer):
         required=True,
         validators=[validate_password],
     )
-
+    
     class Meta:
         model = User
-        fields = ['id', 'username', 'password', 'email', 'first_name', 'last_name', 'last_login', 'date_joined']
+        fields = ['id', 'username', 'password', 'email', 'first_name', 'last_name', 'photo', 'last_login', 'date_joined']
         extra_kwargs = {
             'username': {'required': True},
             'email': {'required': True},
@@ -29,3 +30,10 @@ class UserSerializer(serializers.ModelSerializer):
         user.set_password(password)
         user.save()
         return user
+    
+
+class UserPostsSerializer(UserSerializer):
+    posts = PostSerializer(many=True, read_only=True)
+
+    class Meta(UserSerializer.Meta):
+        fields = UserSerializer.Meta.fields + ['posts']

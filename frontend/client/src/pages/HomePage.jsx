@@ -1,57 +1,33 @@
 import {useEffect, useState } from "react";
-import { fetchUsers } from "../api/users";
+import { fetchPosts } from "../api/posts";
 import useAuth from "../context/useAuth";
-import HomeContainer from "../components/containers/HomeContainer"
-import MainContainer from "../components/containers/MainContainer"
 import SideBar from "../components/SideBar/SideBar"
+import PostFeed from "../components/PostFeed/PostFeed"
 
 export default function HomePage() {
     const {authFetch} = useAuth();
     const [posts, setPosts] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
-    
+    const [isLoading, setIsLoading] = useState(false);
+
+ 
     useEffect(() => {
         async function getData() {
-            const response = await authFetch(fetchUsers);
-            if (response) {
-                setPosts(await response.json());
-            }
+            const response = await authFetch(fetchPosts);
+            setPosts(await response.json());
             setIsLoading(false);
         }
 
         getData();
-    }, [authFetch]);
-
-    if (isLoading) {
-        return (
-            <>
-                <div>LOADING</div>
-            </>
-        )
-    }
+    }, []);
 
     return (
       <>
-        <HomeContainer>
-          <SideBar />
-          <MainContainer>
-            <ul>
-            {posts.map((post, index) => (
-                <li key={post.id || index} style={{ marginBottom: "10px" }}>
-                <ul>
-                    {Object.entries(post).map(([key, value]) => (
-                    <li key={key}>
-                        {key}: {JSON.stringify(value)}
-                    </li>
-                    ))}
-                </ul>
-                </li>
-            ))}
-            </ul>
-          </MainContainer>
-        </HomeContainer>
-
-
+        <main className="main-container flex flex-row min-h-full overflow-hidden">
+          <SideBar home/>
+          <div className="home-container flex flex-col flex-1 h-full pr-[16%] overflow-auto">
+            {isLoading ? <div>LOADING</div> : <PostFeed posts={posts} />}
+          </div>
+        </main>
       </>
     );
-} 
+}

@@ -1,0 +1,11 @@
+.loading-container{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+.loading-container img{
+    aspect-ratio: 1;
+    width: 10%;
+}

@@ -1,0 +1,38 @@
+.profile .account img {
+    display: flex;
+    height: 156px;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-right: 100px;
+    border: 4px solid rgb(255, 255, 255);
+    outline: 4px solid rgb(189, 189, 189);
+}
+
+.profile .account .detail .username {
+    font-size: 20px;
+}
+
+.profile .account .detail .name {
+    font-weight: 500;
+    font-size: 15px;
+}
+
+.profile .posts-grid {
+    margin-top: 50px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+}
+
+.profile .posts-grid .post {
+    aspect-ratio: 3 / 4;
+    background-color: #e1e1e1;
+    object-fit: cover;
+    overflow: hidden;
+    transition: filter 0.1s ease;
+}
+
+.profile .posts-grid .post:hover {
+    filter: brightness(70%);
+}

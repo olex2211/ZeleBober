@@ -1,4 +1,4 @@
-export async function fetchChats(accessToken) {
+export async function fetchChats({accessToken}) {
     const response = await fetch(`${import.meta.env.VITE_API_URL}chats/`, {
         method: "GET",
         headers: {
