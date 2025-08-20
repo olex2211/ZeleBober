@@ -1,26 +1,55 @@
 import "./PostDetail.css";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
 import Comment from "../Comment/Comment";
+import { motion } from "framer-motion";
 
 export default function PostDetail({post, closePost, comments}) {
     post.text = post.description;
+    
+    useEffect(() => {
+        const handleEsc = (event) => {
+        if (event.key === "Escape") {
+            closePost();
+        }
+        };
+
+        window.addEventListener("keydown", handleEsc);
+
+        return () => window.removeEventListener("keydown", handleEsc);
+    }, [closePost]);
+
 
     return (
         <>
-            <div className="post-detail-background"/>
-            <div className="post-detail">
+            {/* <div className="post-detail-background"/> */}
+            <motion.div
+                className="post-detail-background"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 0.7 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+            />
+            <motion.div
+                className="post-detail"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+            >
+            {/* <div className="post-detail"> */}
                 <div className="post-img-container">
                     <img src={post.photo} />
                 </div>
                 <div className="post-information">
-                    <Link to={`users/${post.author}`} className="user">
+                    <Link to={`/users/${post.author}`} onClick={() => closePost()} className="user">
                         <img src={post.user_photo} />
                         {post.username}
                     </Link>
                     <div className="comments text-[14px] leading-[1.3] whitespace-pre-wrap">
-                        <Comment comment={post}/>
+                        <Comment comment={post} closePost={closePost}/>
                         {comments.map((comment, index) => (
-                            <Comment comment={comment} key={index}/>
+                            <Comment comment={comment} key={index} closePost={closePost}/>
                         ))}
                     </div>
                     <div className="buttons">
@@ -33,7 +62,7 @@ export default function PostDetail({post, closePost, comments}) {
                         <button type="submit">Опублікувати</button>
                     </form>
                 </div>
-            </div>
+            </motion.div>
             <button className="close-button" onClick={() => closePost()}/>
         </>
     )

@@ -3,6 +3,7 @@ import { useState, useRef, useEffect } from "react";
 import PostDetail from "../PostDetail/PostDetail";
 import useAuth from "../../context/useAuth";
 import { fetchComments } from "../../api/posts";
+import { AnimatePresence } from "framer-motion";
 
 export default function PostFeed({posts}) {
     const previousUrl = useRef(window.location.pathname);
@@ -40,7 +41,15 @@ export default function PostFeed({posts}) {
         {posts.map((post, index) => (
             <Post key={index} post={post} openPost={openPost} />
         ))}
-        {postDetail?<PostDetail post={postDetail} comments={comments} closePost={closePost} />:<></>}
+        <AnimatePresence>
+            {postDetail && (
+                <PostDetail 
+                    post={postDetail} 
+                    comments={comments} 
+                    closePost={closePost} 
+                />
+            )}
+        </AnimatePresence>
         </div>
       </>
     );

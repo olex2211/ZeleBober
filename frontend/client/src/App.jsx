@@ -1,7 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import PrivateRoute from "./utils/PrivateRoute";
 import HomePage from "./pages/HomePage";
-import ProfilePage from "./pages/ProfilePage";
 import UserPage from "./pages/UserPage";
 import LoginPage from "./pages/LoginPage";
 import { AuthProvider } from "./context/AuthContext.jsx";
@@ -16,7 +15,6 @@ export default function App() {
             <Routes>
               <Route element={<PrivateRoute />}>
                 <Route path="/" element={<HomePage />} />
-                <Route path="/profile" element={<ProfilePage/>} />
                 <Route path="/posts/:id" element={<PostDetail />} />
                 <Route path="/users/:id" element={<UserPage />} />
               </Route>

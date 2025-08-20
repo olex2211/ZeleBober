@@ -5,7 +5,7 @@ export default function Post({ post, openPost }) {
     return (
       <>
         <div className="post flex flex-col pb-[16px]">
-          <Link to={`users/${post.author}`} className="user mt-[10px]">
+          <Link to={`/users/${post.author}`} className="user mt-[10px]">
             <img src={post.user_photo} />
             {post.username}
           </Link>

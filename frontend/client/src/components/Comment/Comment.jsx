@@ -1,6 +1,7 @@
 import "./Comment.css";
+import { Link } from "react-router-dom";
 
-export default function Comment({comment}) {
+export default function Comment({comment, closePost}) {
     function timeAgo(dateString) {
         const now = new Date();
         const past = new Date(dateString);
@@ -28,7 +29,10 @@ export default function Comment({comment}) {
       <div className="comment">
         <img src={comment.user_photo} />
         <div className="text">
-          <b>{comment.username}</b> {comment.text} <br />
+          <Link to={`/users/${comment.author}`} onClick={() => closePost()}>
+            <b>{comment.username}</b> <br /> 
+          </Link>
+          {comment.text}
           <p className="created-time">{timeAgo(comment.created_at)}</p>
         </div>
       </div>

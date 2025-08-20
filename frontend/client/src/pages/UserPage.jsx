@@ -21,7 +21,7 @@ export default function UserPage() {
         }
 
         getData();
-    }, []);
+    }, [id]);
 
     return (
       <>

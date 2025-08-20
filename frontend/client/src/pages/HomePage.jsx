@@ -9,7 +9,7 @@ export default function HomePage() {
     const [posts, setPosts] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
 
- 
+
     useEffect(() => {
         async function getData() {
             const response = await authFetch(fetchPosts);

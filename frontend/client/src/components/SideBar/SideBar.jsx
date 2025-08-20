@@ -26,7 +26,7 @@ export default function SideBar(props) {
             <SideBarButton to="/chats" text="Чати" src={chats} srcBold={chatsBold} clicked={"chats" in props}/>
             <SideBarButton to="/likes" text="Вподобане" src={likes} srcBold={likesBold} clicked={"likes" in props}/>
             <SideBarButton to="/add" text="Створити" src={add} srcBold={addBold} clicked={"add" in props}/>
-            <SideBarButton to="/profile" text="Профіль" src={user.photo} srcBold={user.photo} clicked={"profile" in props} profile/>
+            <SideBarButton to={`/users/${user.id}`} text="Профіль" src={user.photo} srcBold={user.photo} clicked={"profile" in props} profile/>
             <SideBarButton to="/login" text="Вийти" src={logout} srcBold={logout} clicked={false} logoutButton/>
           </div>
         </div>

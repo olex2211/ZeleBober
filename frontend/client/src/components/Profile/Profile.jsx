@@ -3,6 +3,7 @@ import { useState, useRef, useEffect } from "react";
 import PostDetail from "../PostDetail/PostDetail";
 import useAuth from "../../context/useAuth";
 import { fetchComments } from "../../api/posts";
+import { AnimatePresence } from "framer-motion";
 
 export default function Profile({userData}) {
     const previousUrl = useRef(window.location.pathname);
@@ -52,7 +53,15 @@ export default function Profile({userData}) {
                 {userData.posts?.map((post, index) => (
                     <img className="post" key={index} src={post.photo} onClick={() => openPost(post)} />
                 ))}
-                {postDetail?<PostDetail post={postDetail} comments={comments} closePost={closePost} />:<></>}
+                <AnimatePresence>
+                    {postDetail && (
+                        <PostDetail 
+                            post={postDetail} 
+                            comments={comments} 
+                            closePost={closePost} 
+                        />
+                    )}
+                </AnimatePresence>
                 </div>
             </div>
         </>
