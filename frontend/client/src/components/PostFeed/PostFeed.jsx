@@ -37,7 +37,7 @@ export default function PostFeed({posts}) {
     
     return (
       <>
-        <div className="post-feed flex flex-col w-full pt-[26px] px-[25%]">
+        <div className="post-feed flex flex-col w-full pt-[15px] px-[25%]">
         {posts.map((post, index) => (
             <Post key={index} post={post} openPost={openPost} />
         ))}

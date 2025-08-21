@@ -21,6 +21,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    border-radius: 4px;
 }
 
 .post-img-container {
@@ -28,6 +29,8 @@
     background-color: rgb(0, 0, 0);
     width: 55%;
     height: 100%;
+    border-top-left-radius: inherit;
+    border-bottom-left-radius: inherit;
 }
 
 .post-img-container img {

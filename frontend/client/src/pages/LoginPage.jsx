@@ -15,7 +15,7 @@ export default function LoginPage() {
             const response = await login(formData);
             navigate("/", { replace: true });
         } catch (error) {
-            setErrorMessage(error.body.detail);
+            setErrorMessage(error.body);
             console.log(error.body);
         }
     } 
@@ -24,7 +24,7 @@ export default function LoginPage() {
     return (
       <>
         <form onSubmit={handleLogin}>
-          <p className="text-red-800">{errorMessage}</p>
+          <p className="text-red-800">{errorMessage?.detail}</p>
           <input type="text" name="username" placeholder="username" />
           <input type="text" name="password" placeholder="password" />
           <button type="submit">Knopka</button>

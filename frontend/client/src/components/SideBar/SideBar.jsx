@@ -9,8 +9,11 @@ import likesBold from "../../assets/likesBold.png"
 import add from "../../assets/add.png"
 import addBold from "../../assets/addBold.png"
 import zelebober1 from "../../assets/ZeleBober.png"
+import zelebober2 from "../../assets/ZeleBober2.png"
+import zelebober3 from "../../assets/ZeleBober3.png"
 import logout from "../../assets/logout.png"
 import useAuth from "../../context/useAuth";
+import { Link } from "react-router-dom";
 
 export default function SideBar(props) {
     const { user } = useAuth();
@@ -18,15 +21,15 @@ export default function SideBar(props) {
     return (
       <>
         <div className="sidebar-container">
-          <div className="logo-container">
-            <img src={zelebober1}/>
-          </div>
+          <Link to="/" className="logo-container">
+            <img src={zelebober3}/>
+          </Link>
           <div className="nav-container">
             <SideBarButton to="/" text="Головна" src={home} srcBold={homeBold} clicked={"home" in props}/>
             <SideBarButton to="/chats" text="Чати" src={chats} srcBold={chatsBold} clicked={"chats" in props}/>
             <SideBarButton to="/likes" text="Вподобане" src={likes} srcBold={likesBold} clicked={"likes" in props}/>
             <SideBarButton to="/add" text="Створити" src={add} srcBold={addBold} clicked={"add" in props}/>
-            <SideBarButton to={`/users/${user.id}`} text="Профіль" src={user.photo} srcBold={user.photo} clicked={"profile" in props} profile/>
+            <SideBarButton to={`/users/${user.id}`} text="Профіль" src={user.photo} srcBold={user.photo} clicked={"profile" in props && props.profile} profile/>
             <SideBarButton to="/login" text="Вийти" src={logout} srcBold={logout} clicked={false} logoutButton/>
           </div>
         </div>

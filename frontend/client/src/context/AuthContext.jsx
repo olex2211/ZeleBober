@@ -23,7 +23,7 @@ export const AuthProvider = ({ children }) => {
             if (decodedToken) {
                 const response = await authFetch(fetchUserById, {id: decodedToken.user_id});
                 setUser(await response.json());
-                console.log("dsasd");
+                console.log("loadUser");
             } else {
                 setUser(null);
             }
@@ -91,14 +91,24 @@ export const AuthProvider = ({ children }) => {
 
     
     async function authFetch(fetchFunction, params = {}) {
-        if (decodedToken.exp <= Math.floor(Date.now() / 1000)) {
+        try {
+            return await fetchFunction({accessToken, ...params});
+        } catch (error) {
+            console.log(error);
             const refreshedToken = await refreshToken();
             return await fetchFunction({accessToken: refreshedToken, ...params})
         }
+        
+        
+        // if (decodedToken.exp <= Math.floor(Date.now() / 1000)) {
+        //     console.log("EXPIRED");
+        //     const refreshedToken = await refreshToken();
+        //     return await fetchFunction({accessToken: refreshedToken, ...params})
+        // }
 
-        console.log(decodedToken.exp);
+        // console.log("VALID");
 
-        return await fetchFunction({accessToken, ...params});
+        // return await fetchFunction({accessToken, ...params});
     }
 
     const contextData = {

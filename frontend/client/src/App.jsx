@@ -6,6 +6,7 @@ import LoginPage from "./pages/LoginPage";
 import { AuthProvider } from "./context/AuthContext.jsx";
 import RegistrationPage from "./pages/RegistrationPage.jsx";
 import PostDetail from "./components/PostDetail/PostDetail.jsx"
+import PostDetailPage from "./pages/PostDetailPage.jsx";
 
 export default function App() {
     return (
@@ -15,7 +16,7 @@ export default function App() {
             <Routes>
               <Route element={<PrivateRoute />}>
                 <Route path="/" element={<HomePage />} />
-                <Route path="/posts/:id" element={<PostDetail />} />
+                <Route path="/posts/:id" element={<PostDetailPage />} />
                 <Route path="/users/:id" element={<UserPage />} />
               </Route>
               <Route path="/login" element={<LoginPage />} />

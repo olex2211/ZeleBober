@@ -20,17 +20,19 @@ class CommentListAPIView(ListAPIView):
         return post.comments.all()
 
 
-
-
-
-
-
-
-
-
 class PostRetrieveAPIView(RetrieveAPIView):
-    queryset = Post.objects.all()
+    # queryset = Post.objects.all()
     serializer_class = PostSerializer
+
+    def get_object(self):
+        return get_object_or_404(Post, pk=self.kwargs['pk'])
+
+
+
+
+
+
+
 
 
 class PostCreateAPIView(CreateAPIView):
