@@ -3,7 +3,7 @@ from rest_framework.generics import (
     ListAPIView, RetrieveAPIView,
     CreateAPIView, UpdateAPIView, DestroyAPIView
     )
-from .models import Post
+from .models import Post, Comment
 from .serializers import PostSerializer, CommentSerializer
 
 
@@ -21,11 +21,15 @@ class CommentListAPIView(ListAPIView):
 
 
 class PostRetrieveAPIView(RetrieveAPIView):
-    # queryset = Post.objects.all()
     serializer_class = PostSerializer
 
     def get_object(self):
         return get_object_or_404(Post, pk=self.kwargs['pk'])
+    
+
+class CommentCreateAPIView(CreateAPIView):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
 
 
 

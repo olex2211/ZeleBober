@@ -47,6 +47,7 @@ export default function PostDetailPage() {
                     post={postDetail}
                     comments={comments}
                     closePost={closePost}
+                    setComments={setComments}
                 />
               </div>
           </div>

@@ -47,6 +47,7 @@ export default function PostFeed({posts}) {
                     post={postDetail} 
                     comments={comments} 
                     closePost={closePost} 
+                    setComments={setComments}
                 />
             )}
         </AnimatePresence>

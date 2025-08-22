@@ -3,10 +3,11 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import Comment from "../Comment/Comment";
 import { timeAgo } from "../../utils/utils";
+import { fetchCreateComment, fetchComments } from "../../api/posts";
 
 
-export default function PostWindow({post, comments, closePost}) {
-    const {user} = useAuth();
+export default function PostWindow({post, comments, closePost, setComments}) {
+    const {user, authFetch} = useAuth();
     const [copied, setCopied] = useState(false);  
 
     post.text = post.description;
@@ -21,6 +22,30 @@ export default function PostWindow({post, comments, closePost}) {
         }
     };
 
+    async function handleSubmit(e) {
+        e.preventDefault();
+        const formData = {
+            text: e.target.elements.text.value,
+            answer: false,
+            post: post.id,
+            
+            // author: user.id,
+        }
+
+        try {
+            const response = await authFetch(fetchCreateComment, formData);
+            console.log(response);
+
+            const CommentsResponse = await authFetch(fetchComments, {id: post.id});
+            setComments(await CommentsResponse.json());
+
+            e.target.reset();
+        }
+            catch (error) {
+            console.error(error);
+        }
+    }
+
     return(
         <>
             <div className="post-img-container">
@@ -33,7 +58,7 @@ export default function PostWindow({post, comments, closePost}) {
                 </Link>
                 <div className="comments text-[14px] leading-[1.3] whitespace-pre-wrap">
                     <Comment comment={post} closePost={closePost}/>
-                    {comments.map((comment, index) => (
+                    {comments.toReversed().map((comment, index) => (
                         <Comment comment={comment} key={index} closePost={closePost}/>
                     ))}
                 </div>
@@ -43,9 +68,9 @@ export default function PostWindow({post, comments, closePost}) {
                     {copied ? "✔ Скопійовано" : null}
                 </div>
                 <p className="created-time pl-[14px]">{timeAgo(post.created_at)}</p>
-                <form className="add-comment">
+                <form className="add-comment" onSubmit={handleSubmit}>
                     <img src={user.photo} />
-                    <textarea name="comment" placeholder="Додайте коментар..." required></textarea>
+                    <textarea name="text" placeholder="Додайте коментар..." required></textarea>
                     <button type="submit">Опублікувати</button>
                 </form>
             </div>

@@ -28,7 +28,7 @@ export default function Post({ post, openPost }) {
             <svg onClick={() => openPost(post)} aria-label="Коментувати" fill="#000000" height="24" role="img" viewBox="0 0 24 24" width="24"><title>Коментувати</title><path d="M20.656 17.008a9.993 9.993 0 1 0-3.59 3.615L22 22Z" fill="none" stroke="currentColor" strokeLinejoin="round" strokeWidth="2"></path></svg>
             {!copied ? <svg onClick={handleCopy} aria-label="Поширити" fill="#000000" height="24" role="img" viewBox="0 0 24 24" width="24"><title>Поширити</title><line fill="none" stroke="currentColor" strokeLinejoin="round" strokeWidth="2" x1="22" x2="9.218" y1="3" y2="10.083"></line><polygon fill="none" points="11.698 20.334 22 3.001 2 3.001 9.218 10.084 11.698 20.334" stroke="currentColor" strokeLinejoin="round" strokeWidth="2"></polygon></svg> :null}
             {copied ? "✔ Скопійовано" : null}
-            {/* SANIA LOX */}
+            {/* ROMA LOX */}
           </div>
           <div className="description text-[14px] leading-[1.3] whitespace-pre-wrap">
             <b>{post.username}</b> {post.description}

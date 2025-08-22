@@ -5,7 +5,7 @@ import Comment from "../Comment/Comment";
 import { motion } from "framer-motion";
 import PostWindow from "../PostWindow/PostWindow";
 
-export default function PostDetail({post, closePost, comments}) {
+export default function PostDetail({post, closePost, comments, setComments}) {
 
 
     useEffect(() => {
@@ -40,6 +40,7 @@ export default function PostDetail({post, closePost, comments}) {
                     post={post}
                     comments={comments}
                     closePost={closePost}
+                    setComments={setComments}
                 />
             </motion.div>
             <button className="close-button" onClick={() => closePost()}/>

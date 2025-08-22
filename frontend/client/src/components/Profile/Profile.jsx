@@ -59,6 +59,7 @@ export default function Profile({userData}) {
                             post={postDetail} 
                             comments={comments} 
                             closePost={closePost} 
+                            setComments={setComments}
                         />
                     )}
                 </AnimatePresence>
