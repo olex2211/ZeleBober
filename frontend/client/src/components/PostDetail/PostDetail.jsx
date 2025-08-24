@@ -39,8 +39,8 @@ export default function PostDetail({post, closePost, comments, setComments}) {
                 <PostWindow
                     post={post}
                     comments={comments}
-                    closePost={closePost}
                     setComments={setComments}
+                    closePost={closePost}
                 />
             </motion.div>
             <button className="close-button" onClick={() => closePost()}/>

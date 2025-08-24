@@ -1,0 +1,36 @@
+.form-container {
+    align-items: center;
+}
+
+.form-header {
+    display: flex;
+    width: 100%;
+    padding: 10px;
+    background-color: rgb(158, 158, 158);
+    justify-content: center;
+    border-radius: 14px 14px 0 0;
+}
+
+.form-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.form-body .photo {
+    display: flex;
+    width: 80%;
+    aspect-ratio: 1;
+    background-color: aqua;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-body .description {
+    display: flex;
+    width: 80%;
+    background-color: rgba(0, 255, 102, 0.62);
+    align-items: center;
+    justify-content: center;
+}

@@ -43,11 +43,11 @@ export default function PostFeed({posts}) {
         ))}
         <AnimatePresence>
             {postDetail && (
-                <PostDetail 
-                    post={postDetail} 
-                    comments={comments} 
-                    closePost={closePost} 
+                <PostDetail
+                    post={postDetail}
+                    comments={comments}
                     setComments={setComments}
+                    closePost={closePost}
                 />
             )}
         </AnimatePresence>

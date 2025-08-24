@@ -15,7 +15,6 @@ export default function UserPage() {
     useEffect(() => {
         async function getData() {
             const response = await authFetch(fetchUserById, {id});
-            console.log(response);
             setUserData(await response.json());
             setIsLoading(false);
         }

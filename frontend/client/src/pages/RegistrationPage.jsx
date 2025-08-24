@@ -9,11 +9,11 @@ const navigate = useNavigate();
 
 async function handleRegistration(e) {
     e.preventDefault();
-    const formData = Object.fromEntries(new FormData(e.target));
+    const formData = new FormData(e.target);
 
     try {
         const registrationResponse = await register(formData);
-        const loginResponse = await login(formData);
+        const loginResponse = await login({username: formData.get("username"), password: formData.get("username")});
         navigate("/", { replace: true });
     }
         catch (error) {
@@ -34,6 +34,9 @@ return (
       <input type="text" name="last_name" placeholder="last name" />
       <p className="text-red-800">{errorMessages?.email}</p>
       <input type="text" name="email" placeholder="email" />
+      <p className="text-red-800">{errorMessages?.image}</p>
+      <input type="file" name="photo" accept="image/*" />
+
       <button type="submit">Register</button>
     </form>
   </>

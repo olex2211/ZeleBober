@@ -23,7 +23,6 @@ export const AuthProvider = ({ children }) => {
             if (decodedToken) {
                 const response = await authFetch(fetchUserById, {id: decodedToken.user_id});
                 setUser(await response.json());
-                console.log("loadUser");
             } else {
                 setUser(null);
             }

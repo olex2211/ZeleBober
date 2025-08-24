@@ -29,6 +29,9 @@ export default function Profile({userData}) {
             setComments(await response.json());
         }
         window.history.pushState({}, "", `/posts/${post.id}`);
+        
+        post.author = {...userData};
+        post.author.posts = undefined;
         setPostDetail(post);
     }
 
@@ -56,9 +59,9 @@ export default function Profile({userData}) {
                 <AnimatePresence>
                     {postDetail && (
                         <PostDetail 
-                            post={postDetail} 
-                            comments={comments} 
-                            closePost={closePost} 
+                            post={postDetail}
+                            comments={comments}
+                            closePost={closePost}
                             setComments={setComments}
                         />
                     )}

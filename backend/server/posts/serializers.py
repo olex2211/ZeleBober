@@ -1,35 +1,37 @@
 from rest_framework import serializers
 from .models import Post, Comment
+from users.serializers import UserSerializer
 
 class CommentSerializer(serializers.ModelSerializer):
-    username = serializers.CharField(source='author.username', read_only=True)
-    user_photo = serializers.ImageField(source='author.photo', read_only=True)
-
     class Meta:
         model = Comment
-        fields = ['id', 'text', 'answer', 'created_at', 'updated_at', 'author', 'username', 'user_photo', 'post']
-        read_only_fields = ['created_at', 'updated_at', 'username', 'user_photo', 'author'] #'author'
+        fields = ['id', 'text', 'created_at', 'updated_at', 'post']
+        read_only_fields = ['created_at', 'updated_at', 'post']
         extra_kwargs = {
             'text': {'required': True},
-            'post': {'required': True},
-            # 'author': {'required': True},
         }
-        
-    def create(self, validated_data):
-        # return Comment.objects.create(**validated_data)
-        
-        # додаємо автора з контексту запиту
-        request = self.context.get('request')
-        print(request)
-        if request and hasattr(request, 'user'):
-            validated_data['author'] = request.user
-        return super().create(validated_data)
-    
+
+
+class CommentAuthorSerializer(CommentSerializer):
+    author = UserSerializer(read_only=True)
+
+    class Meta(CommentSerializer.Meta):
+        fields = CommentSerializer.Meta.fields + ['author']
+
+
 class PostSerializer(serializers.ModelSerializer):
-    username = serializers.CharField(source='author.username', read_only=True)
-    user_photo = serializers.ImageField(source='author.photo', read_only=True)
-    
     class Meta:
         model = Post
-        fields = ['id', 'description', 'photo', 'created_at', 'updated_at', 'author', 'username', 'user_photo']
-        read_only_fields = ['created_at', 'updated_at', 'username', 'user_photo']
+        fields = ['id', 'description', 'photo', 'created_at', 'updated_at']
+        read_only_fields = ['created_at', 'updated_at']
+        extra_kwargs = {
+            'description': {'required': True},
+            'photo': {'required': True},
+        }
+
+
+class PostAuthorSerializer(PostSerializer):
+    author = UserSerializer(read_only=True)
+
+    class Meta(PostSerializer.Meta):
+        fields = PostSerializer.Meta.fields + ['author']

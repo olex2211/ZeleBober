@@ -6,9 +6,9 @@ import { timeAgo } from "../../utils/utils";
 import { fetchCreateComment, fetchComments } from "../../api/posts";
 
 
-export default function PostWindow({post, comments, closePost, setComments}) {
+export default function PostWindow({post, comments, setComments, closePost}) {
     const {user, authFetch} = useAuth();
-    const [copied, setCopied] = useState(false);  
+    const [copied, setCopied] = useState(false);
 
     post.text = post.description;
 
@@ -23,14 +23,13 @@ export default function PostWindow({post, comments, closePost, setComments}) {
     };
 
     async function handleSubmit(e) {
+        console.log(post);
         e.preventDefault();
         const formData = {
             text: e.target.elements.text.value,
-            answer: false,
-            post: post.id,
-            
-            // author: user.id,
+            id: post.id,
         }
+        console.log(formData);
 
         try {
             const response = await authFetch(fetchCreateComment, formData);
@@ -52,9 +51,9 @@ export default function PostWindow({post, comments, closePost, setComments}) {
                 <img src={post.photo} />
             </div>
             <div className="post-information">
-                <Link to={`/users/${post.author}`} onClick={() => closePost()} className="user">
-                    <img src={post.user_photo} />
-                    {post.username}
+                <Link to={`/users/${post.author.id}`} onClick={() => closePost()} className="user">
+                    <img src={post.author.photo} />
+                    {post.author.username}
                 </Link>
                 <div className="comments text-[14px] leading-[1.3] whitespace-pre-wrap">
                     <Comment comment={post} closePost={closePost}/>

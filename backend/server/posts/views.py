@@ -1,35 +1,49 @@
 from django.shortcuts import get_object_or_404
-from rest_framework.generics import (
-    ListAPIView, RetrieveAPIView,
-    CreateAPIView, UpdateAPIView, DestroyAPIView
-    )
+from rest_framework.generics import (ListAPIView, RetrieveAPIView,
+    CreateAPIView, UpdateAPIView, DestroyAPIView)
 from .models import Post, Comment
-from .serializers import PostSerializer, CommentSerializer
+from .serializers import (PostSerializer, PostAuthorSerializer,
+    CommentSerializer, CommentAuthorSerializer)
 
 
 class PostListAPIView(ListAPIView):
     queryset = Post.objects.all()
+    serializer_class = PostAuthorSerializer
+
+
+class PostRetrieveAPIView(RetrieveAPIView):
+    serializer_class = PostAuthorSerializer
+
+    def get_object(self):
+        return get_object_or_404(Post, pk=self.kwargs['pk'])
+
+
+class PostCreateAPIView(CreateAPIView):
+    queryset = Post.objects.all()
     serializer_class = PostSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)
 
 
 class CommentListAPIView(ListAPIView):
-    serializer_class = CommentSerializer
+    serializer_class = CommentAuthorSerializer
 
     def get_queryset(self):
         post = get_object_or_404(Post, pk=self.kwargs['pk'])
         return post.comments.all()
 
 
-class PostRetrieveAPIView(RetrieveAPIView):
-    serializer_class = PostSerializer
-
-    def get_object(self):
-        return get_object_or_404(Post, pk=self.kwargs['pk'])
-    
-
 class CommentCreateAPIView(CreateAPIView):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
+    
+    # def create(self, request, *args, **kwargs):
+    #     return super().create(request, *args, **kwargs)
+
+    def perform_create(self, serializer):
+        post = get_object_or_404(Post, pk=self.kwargs['pk'])
+        serializer.save(post=post, author=self.request.user)
 
 
 
@@ -39,9 +53,6 @@ class CommentCreateAPIView(CreateAPIView):
 
 
 
-class PostCreateAPIView(CreateAPIView):
-    queryset = Post.objects.all()
-    serializer_class = PostSerializer
 
 
 class PostUpdateAPIView(UpdateAPIView):
@@ -52,10 +63,3 @@ class PostUpdateAPIView(UpdateAPIView):
 class PostDestroyAPIView(DestroyAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-
-
-# post_list_view = PostListAPIView.as_view()
-# post_retrieve_view = PostRetrieveAPIView.as_view()
-# post_create_view = PostCreateAPIView.as_view()
-# post_update_view = PostUpdateAPIView.as_view()
-# post_destroy_view = PostDestroyAPIView.as_view()

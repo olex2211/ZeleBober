@@ -20,7 +20,7 @@ export async function fetchPosts({accessToken}) {
 }
 
 export async function fetchPostById({accessToken, id}) {
-    const response = await fetch(`${import.meta.env.VITE_API_URL}posts/post/${id}`, {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}posts/${id}`, {
         method: "GET",
         headers: {
             'Content-Type': 'application/json',
@@ -41,7 +41,7 @@ export async function fetchPostById({accessToken, id}) {
 }
 
 export async function fetchComments({accessToken, id}) {
-    const response = await fetch(`${import.meta.env.VITE_API_URL}posts/${id}`, {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}posts/${id}/comments/`, {
         method: "GET",
         headers: {
             'Content-Type': 'application/json',
@@ -51,7 +51,7 @@ export async function fetchComments({accessToken, id}) {
 
     if (!response.ok) {
         throw {
-            message: `API fetch posts error`,
+            message: `API fetch comments error`,
             status: response.status,
             statusText: response.statusText,
             body: await response.json()
@@ -61,18 +61,15 @@ export async function fetchComments({accessToken, id}) {
     return response;
 }
 
-export async function fetchCreateComment({ accessToken, text, post, answer, }) {
-    const response = await fetch(`${import.meta.env.VITE_API_URL}posts/create/comment/`, {
+export async function fetchCreateComment({ accessToken, id, text }) {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}posts/${id}/comments/create/`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
             'Authorization': `Bearer ${accessToken}`,
         },
         body: JSON.stringify({
-            // author: author,
             text: text,
-            post: post,
-            answer: answer,
         }),
     });
 
@@ -87,3 +84,27 @@ export async function fetchCreateComment({ accessToken, text, post, answer, }) {
 
     return response;
 }
+
+// export async function fetchCreatePost({ accessToken, description }) {
+//     const response = await fetch(`${import.meta.env.VITE_API_URL}posts/create/`, {
+//         method: "POST",
+//         headers: {
+//             "Content-Type": "application/json",
+//             'Authorization': `Bearer ${accessToken}`,
+//         },
+//         body: JSON.stringify({
+//             description: description,
+//         }),
+//     });
+
+//     if (!response.ok) {
+//         throw {
+//             message: `API fetch create comment error`,
+//             status: response.status,
+//             statusText: response.statusText,
+//             body: await response.json()
+//         };
+//     }
+
+//     return response;
+// }

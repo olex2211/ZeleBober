@@ -3,11 +3,10 @@ from . import views
 
 urlpatterns = [
     path('', views.PostListAPIView.as_view(), name='post-list'),
-    path('<int:pk>/', views.CommentListAPIView.as_view(), name='post-comments'),
-    path('post/<int:pk>/', views.PostRetrieveAPIView.as_view(), name='post-by-id'),
+    path('<int:pk>/', views.PostRetrieveAPIView.as_view(), name='post-by-id'),
+    path('<int:pk>/comments/', views.CommentListAPIView.as_view(), name='post-comments'),
     path('create/', views.PostCreateAPIView.as_view(), name='post-create'),
-    path('create/comment/', views.CommentCreateAPIView.as_view(), name='comment-create'),
-
+    path('<int:pk>/comments/create/', views.CommentCreateAPIView.as_view(), name='comment-create'),
 ]
     # path('update/', views.post_update_view, name='post-update'),
     # path('delete/', views.post_destroy_view, name='post-destroy'),

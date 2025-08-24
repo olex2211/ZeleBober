@@ -16,7 +16,7 @@ class Message(models.Model):
     author = None
     likes = None
     text = models.CharField(max_length=300)
-    answer = models.BooleanField(default=False)
+    # answer = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

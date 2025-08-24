@@ -6,6 +6,7 @@ from rest_framework.generics import (
 from django.contrib.auth import get_user_model
 from .serializers import UserSerializer, UserPostsSerializer
 from rest_framework.permissions import AllowAny
+from rest_framework.parsers import MultiPartParser, FormParser
 
 User = get_user_model()
 
@@ -13,6 +14,7 @@ class UserCreateAPIView(CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = [AllowAny]
+    parser_classes = [MultiPartParser, FormParser]
     
     
 class UserRetrieveAPIView(RetrieveAPIView):
