@@ -1,13 +1,10 @@
-export async function fetchToken({ username, password }) {
+export async function fetchToken(formData) {
     const response = await fetch(`${import.meta.env.VITE_API_URL}token/`, {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            username: username,
-            password: password,
-        }),
+        // headers: {
+        //     "Content-Type": "application/json",
+        // },
+        body: formData,
         credentials: "include",
     });
 

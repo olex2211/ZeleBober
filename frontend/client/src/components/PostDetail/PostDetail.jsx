@@ -1,13 +1,9 @@
 import "./PostDetail.css";
-import { Link } from "react-router-dom";
 import { useEffect } from "react";
-import Comment from "../Comment/Comment";
 import { motion } from "framer-motion";
 import PostWindow from "../PostWindow/PostWindow";
 
 export default function PostDetail({post, closePost, comments, setComments}) {
-
-
     useEffect(() => {
         const handleEsc = (event) => {
         if (event.key === "Escape") {

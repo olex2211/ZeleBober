@@ -1,14 +1,18 @@
 from django.shortcuts import get_object_or_404
 from rest_framework.generics import (ListAPIView, RetrieveAPIView,
     CreateAPIView, UpdateAPIView, DestroyAPIView)
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from .pyginators import PostCursorPagination
 from .models import Post, Comment
 from .serializers import (PostSerializer, PostAuthorSerializer,
     CommentSerializer, CommentAuthorSerializer)
 
-
 class PostListAPIView(ListAPIView):
     queryset = Post.objects.all()
     serializer_class = PostAuthorSerializer
+    pagination_class = PostCursorPagination
 
 
 class PostRetrieveAPIView(RetrieveAPIView):
@@ -46,6 +50,25 @@ class CommentCreateAPIView(CreateAPIView):
         serializer.save(post=post, author=self.request.user)
 
 
+class ToggleLikeAPIView(APIView):
+    def post(self, request, pk):
+        try:
+            post = Post.objects.get(pk=pk)
+        except Post.DoesNotExist:
+            return Response({'detail': 'Post not found'}, status=status.HTTP_404_NOT_FOUND)
+
+        user = request.user
+        if user in post.likes.all():
+            post.likes.remove(user)
+            is_liked = False
+        else:
+            post.likes.add(user)
+            is_liked = True
+
+        return Response({
+            'is_liked': is_liked,
+            'likes_count': post.likes.count(),
+        }, status=status.HTTP_200_OK)
 
 
 

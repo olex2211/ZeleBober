@@ -9,14 +9,13 @@ export default function LoginPage() {
 
     async function handleLogin(e) {
         e.preventDefault();
-        const formData = Object.fromEntries(new FormData(e.target));
+        const formData = new FormData(e.target);
 
         try {
             const response = await login(formData);
             navigate("/", { replace: true });
         } catch (error) {
             setErrorMessage(error.body);
-            console.log(error.body);
         }
     } 
     

@@ -7,6 +7,7 @@ urlpatterns = [
     path('<int:pk>/comments/', views.CommentListAPIView.as_view(), name='post-comments'),
     path('create/', views.PostCreateAPIView.as_view(), name='post-create'),
     path('<int:pk>/comments/create/', views.CommentCreateAPIView.as_view(), name='comment-create'),
+    path('<int:pk>/like', views.ToggleLikeAPIView.as_view(), name='toggle-like-post'),
 ]
     # path('update/', views.post_update_view, name='post-update'),
     # path('delete/', views.post_destroy_view, name='post-destroy'),

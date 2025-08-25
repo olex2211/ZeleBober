@@ -8,7 +8,7 @@ export default function HomePage() {
     const {authFetch} = useAuth();
     const [posts, setPosts] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
-
+    console.log(posts);
 
     useEffect(() => {
         async function getData() {
@@ -19,6 +19,8 @@ export default function HomePage() {
 
         getData();
     }, []);
+
+    console.log(posts);
 
     return (
       <>

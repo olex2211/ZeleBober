@@ -49,14 +49,13 @@ export const AuthProvider = ({ children }) => {
         
 
     async function register(userData) {
-        // try {
-        const response = await fetchCreateUser(userData);
-        // const data = await response.json();
-        return response;
-        // }
-        // catch (error) {
-        // throw error;
-        // }
+        try {
+            const response = await fetchCreateUser(userData);
+            return response;
+        } catch (error) {
+            await logout();
+            throw error;
+        }
     };
 
 
@@ -80,8 +79,8 @@ export const AuthProvider = ({ children }) => {
         try{
             await fetchBlacklist();
         }
-        catch (error) {
-            console.log(error);
+        catch {
+            console.log("");
         }
         setAccessToken(null);
         localStorage.removeItem("accessToken");
@@ -94,20 +93,13 @@ export const AuthProvider = ({ children }) => {
             return await fetchFunction({accessToken, ...params});
         } catch (error) {
             console.log(error);
-            const refreshedToken = await refreshToken();
-            return await fetchFunction({accessToken: refreshedToken, ...params})
+            if (error.status === 401) {
+                const refreshedToken = await refreshToken();
+                return await fetchFunction({accessToken: refreshedToken, ...params})
+            } else {
+                throw error;
+            }
         }
-        
-        
-        // if (decodedToken.exp <= Math.floor(Date.now() / 1000)) {
-        //     console.log("EXPIRED");
-        //     const refreshedToken = await refreshToken();
-        //     return await fetchFunction({accessToken: refreshedToken, ...params})
-        // }
-
-        // console.log("VALID");
-
-        // return await fetchFunction({accessToken, ...params});
     }
 
     const contextData = {

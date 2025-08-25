@@ -1,12 +1,7 @@
-import {useEffect, useState } from "react";
-import { fetchPosts } from "../api/posts";
-import useAuth from "../context/useAuth";
 import SideBar from "../components/SideBar/SideBar"
 import CreatePostForm from "../components/CreatePostForm/CreatePostForm"
 
 export default function CreatePostPage() {
-    const {authFetch} = useAuth();
-
     return (
       <>
         <main className="main-container flex flex-row min-h-full overflow-hidden">

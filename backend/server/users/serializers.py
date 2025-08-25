@@ -33,11 +33,17 @@ class UserSerializer(serializers.ModelSerializer):
 
 class UserPostsSerializer(UserSerializer):
     posts = serializers.SerializerMethodField()
+    liked_posts = serializers.SerializerMethodField()
 
     class Meta(UserSerializer.Meta):
-        fields = UserSerializer.Meta.fields + ['posts']
+        fields = UserSerializer.Meta.fields + ['posts', 'liked_posts']
     
     def get_posts(self, obj):
         from posts.serializers import PostSerializer
         posts = obj.posts.all()
         return PostSerializer(posts, many=True, context=self.context).data
+    
+    def get_liked_posts(self, obj):
+        from posts.serializers import PostAuthorSerializer
+        posts = obj.liked_posts.all()
+        return PostAuthorSerializer(posts, many=True, context=self.context).data

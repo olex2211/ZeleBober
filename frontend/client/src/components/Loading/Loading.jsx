@@ -1,7 +1,6 @@
 import "./loading.css"
 import zelebober from "../../assets/ZeleBober.svg"
 
-
 export default function Loading() {
 
     return(

@@ -6,7 +6,6 @@ import CreatePostPage from "./pages/CreatePostPage";
 import LoginPage from "./pages/LoginPage";
 import { AuthProvider } from "./context/AuthContext.jsx";
 import RegistrationPage from "./pages/RegistrationPage.jsx";
-import PostDetail from "./components/PostDetail/PostDetail.jsx"
 import PostDetailPage from "./pages/PostDetailPage.jsx";
 
 export default function App() {

@@ -9,18 +9,21 @@ const navigate = useNavigate();
 
 async function handleRegistration(e) {
     e.preventDefault();
-    const formData = new FormData(e.target);
+    const registrationFormData = new FormData(e.target);
+    const loginFormData = new FormData();
+    loginFormData.append("username", registrationFormData.get("username"));
+    loginFormData.append("password", registrationFormData.get("password"));
 
     try {
-        const registrationResponse = await register(formData);
-        const loginResponse = await login({username: formData.get("username"), password: formData.get("username")});
+        const registrationResponse = await register(registrationFormData);
+        const loginResponse = await login(loginFormData);
         navigate("/", { replace: true });
-    }
-        catch (error) {
+    } catch (error) {
         setErrorMessages(error.body);
+        console.log(error);
     }
 }
-  
+
 return (
   <>
     <form onSubmit={handleRegistration}>
@@ -35,7 +38,7 @@ return (
       <p className="text-red-800">{errorMessages?.email}</p>
       <input type="text" name="email" placeholder="email" />
       <p className="text-red-800">{errorMessages?.image}</p>
-      <input type="file" name="photo" accept="image/*" />
+      <input type="file" name="photo" accept="image/*" required/>
 
       <button type="submit">Register</button>
     </form>

@@ -22,12 +22,12 @@ export default function SideBar(props) {
       <>
         <div className="sidebar-container">
           <Link to="/" className="logo-container">
-            <img src={zelebober1}/>
+            <img src={zelebober3}/>
           </Link>
           <div className="nav-container">
             <SideBarButton to="/" text="Головна" src={home} srcBold={homeBold} clicked={"home" in props}/>
             <SideBarButton to="/chats" text="Чати" src={chats} srcBold={chatsBold} clicked={"chats" in props}/>
-            <SideBarButton to="/likes" text="Вподобане" src={likes} srcBold={likesBold} clicked={"likes" in props}/>
+            <SideBarButton to="/search" text="Пошук" src={likes} srcBold={likesBold} clicked={"likes" in props}/>
             <SideBarButton to="/posts/create" text="Створити" src={add} srcBold={addBold} clicked={"add" in props}/>
             <SideBarButton to={`/users/${user.id}`} text="Профіль" src={user.photo} srcBold={user.photo} clicked={"profile" in props && props.profile} profile/>
             <SideBarButton to="/login" text="Вийти" src={logout} srcBold={logout} clicked={false} logoutButton/>

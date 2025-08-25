@@ -48,12 +48,16 @@
     height: 40px;
     padding: 8px 8px 8px 0px;
     cursor: pointer;
-    /* transition: fill 0.3s ease; */
+    transition: all 0.3s ease;
 }
 
-.post .buttons svg:hover{
-    fill: rgb(139, 139, 139);
-    color: rgb(139, 139, 139);
+.post .buttons svg:hover {
+    fill: rgb(142, 142, 142);
+    color: rgb(142, 142, 142);
+    scale: 1.1;
+}
+.post .buttons .like:hover {
+    fill: #ff3040;
 }
 
 .post .description b{

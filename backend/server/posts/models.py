@@ -14,6 +14,7 @@ class Post(models.Model):
 
     class Meta:
         db_table = 'post'
+        ordering = ['-created_at']
 
 
 class Comment(Message):
@@ -24,3 +25,4 @@ class Comment(Message):
     
     class Meta:
         db_table = 'comment'
+        ordering = ['-created_at']

@@ -10,13 +10,13 @@ class Chat(models.Model):
 
     class Meta:
         db_table = 'chat'
+        ordering = ['-updated_at']
 
 
 class Message(models.Model):
     author = None
     likes = None
     text = models.CharField(max_length=300)
-    # answer = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -33,3 +33,4 @@ class ChatMessage(Message):
     
     class Meta:
         db_table = 'chat_message'
+        ordering = ['-created_at']

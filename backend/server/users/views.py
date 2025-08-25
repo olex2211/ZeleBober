@@ -6,17 +6,15 @@ from rest_framework.generics import (
 from django.contrib.auth import get_user_model
 from .serializers import UserSerializer, UserPostsSerializer
 from rest_framework.permissions import AllowAny
-from rest_framework.parsers import MultiPartParser, FormParser
 
 User = get_user_model()
 
-class UserCreateAPIView(CreateAPIView):
+
+class UserListAPIView(ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = [AllowAny]
-    parser_classes = [MultiPartParser, FormParser]
-    
-    
+
+
 class UserRetrieveAPIView(RetrieveAPIView):
     serializer_class = UserPostsSerializer
 
@@ -24,10 +22,24 @@ class UserRetrieveAPIView(RetrieveAPIView):
         return get_object_or_404(User, pk=self.kwargs['pk'])
     
 
-class UserListAPIView(ListAPIView):
+class UserCreateAPIView(CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    
+    permission_classes = [AllowAny]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 class UserUpdateAPIView(UpdateAPIView):
     queryset = User.objects.all()
@@ -37,10 +49,3 @@ class UserUpdateAPIView(UpdateAPIView):
 class UserDestroyAPIView(DestroyAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-
-
-user_list_view = UserListAPIView.as_view()
-user_retrieve_view = UserRetrieveAPIView.as_view()
-user_create_view = UserCreateAPIView.as_view()
-user_update_view = UserUpdateAPIView.as_view()
-user_destroy_view = UserDestroyAPIView.as_view()
