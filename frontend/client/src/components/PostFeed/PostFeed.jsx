@@ -1,11 +1,12 @@
 import Post from "../Post/Post"
 import { useState, useRef, useEffect } from "react";
 import PostDetail from "../PostDetail/PostDetail";
+import ScrollPagination from "../ScrollPagination/ScrollPagination";
 import useAuth from "../../context/useAuth";
 import { fetchComments } from "../../api/posts";
 import { AnimatePresence } from "framer-motion";
 
-export default function PostFeed({posts}) {
+export default function PostFeed({scrollRef}) {
     const previousUrl = useRef(window.location.pathname);
     const [postDetail, setPostDetail] = useState(null);
     const [comments, setComments] = useState([]);
@@ -38,19 +39,21 @@ export default function PostFeed({posts}) {
     return (
       <>
         <div className="post-feed flex flex-col w-full pt-[15px] px-[25%]">
-        {posts.map((post, index) => (
-            <Post key={index} post={post} openPost={openPost} />
-        ))}
-        <AnimatePresence>
-            {postDetail && (
-                <PostDetail
-                    post={postDetail}
-                    comments={comments}
-                    setComments={setComments}
-                    closePost={closePost}
-                />
-            )}
-        </AnimatePresence>
+            <ScrollPagination scrollRef={scrollRef}>
+                {({ element, index }) => (
+                    <Post key={index} post={element} openPost={openPost} />
+                )}
+            </ScrollPagination>
+            <AnimatePresence>
+                {postDetail && (
+                    <PostDetail
+                        post={postDetail}
+                        comments={comments}
+                        setComments={setComments}
+                        closePost={closePost}
+                    />
+                )}
+            </AnimatePresence>
         </div>
       </>
     );

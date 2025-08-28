@@ -1,13 +1,14 @@
 from django.shortcuts import get_object_or_404
 from rest_framework.generics import (ListAPIView, RetrieveAPIView,
-    CreateAPIView, UpdateAPIView, DestroyAPIView)
+                                     CreateAPIView, UpdateAPIView, DestroyAPIView)
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .pyginators import PostCursorPagination
+from .paginators import PostCursorPagination
 from .models import Post, Comment
 from .serializers import (PostSerializer, PostAuthorSerializer,
-    CommentSerializer, CommentAuthorSerializer)
+                          CommentSerializer, CommentAuthorSerializer)
+
 
 class PostListAPIView(ListAPIView):
     queryset = Post.objects.all()

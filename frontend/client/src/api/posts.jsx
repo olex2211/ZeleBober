@@ -1,5 +1,5 @@
-export async function fetchPosts({accessToken}) {
-    const response = await fetch(`${import.meta.env.VITE_API_URL}posts/`, {
+export async function fetchPosts({accessToken, url = `${import.meta.env.VITE_API_URL}posts/`}) {
+    const response = await fetch(url, {
         method: "GET",
         headers: {
             'Content-Type': 'application/json',
@@ -127,24 +127,3 @@ export async function fetchLikePost({ accessToken, id }) {
 
     return response;
 }
-
-// export async function fetchLikedPosts({ accessToken, id }) {
-//     const response = await fetch(`${import.meta.env.VITE_API_URL}users/${id}/liked`, {
-//         method: "POST",
-//         headers: {
-//             "Content-Type": "application/json",
-//             'Authorization': `Bearer ${accessToken}`,
-//         },
-//     });
-
-//     if (!response.ok) {
-//         throw {
-//             message: `API fetch like post error`,
-//             status: response.status,
-//             statusText: response.statusText,
-//             body: await response.json()
-//         };
-//     }
-
-//     return response;
-// }

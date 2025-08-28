@@ -11,6 +11,8 @@ export default function UserPage() {
     const [userData, setUserData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
+    console.log(userData);
+    
 
     useEffect(() => {
         async function getData() {
