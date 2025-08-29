@@ -27,7 +27,7 @@ class Message(models.Model):
 
 class ChatMessage(Message):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='messages')
-    likes = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='liked_messages')
+    # likes = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='liked_messages')
     chat = models.ForeignKey(Chat, on_delete=models.CASCADE, related_name='messages')
 
     
