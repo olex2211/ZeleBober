@@ -33,4 +33,4 @@ class ChatMessage(Message):
     
     class Meta:
         db_table = 'chat_message'
-        ordering = ['-created_at']
+        ordering = ['created_at']

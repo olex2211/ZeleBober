@@ -10,20 +10,24 @@ User = get_user_model()
 class ChatConsumer(AsyncWebsocketConsumer):
 
     async def connect(self):
-        self.room_id = self.scope['url_route']['kwargs']['pk']
+        self.room_id = int(self.scope['url_route']['kwargs']['pk'])
         self.room_group_name = f'chat_{self.room_id}'
         self.user = self.scope['user']
         
+        if not self.user.is_authenticated:
+            await self.close(code=4004)
+            return
+
         is_member = await self.user_in_chat(self.room_id, self.user)
         if not is_member:
-            await self.close()
+            await self.close(code=4004)
             return
 
         await self.channel_layer.group_add(
             self.room_group_name,
             self.channel_name
         )
-        await self.accept()
+        await self.accept(subprotocol=self.scope["subprotocols"][0])
 
     async def disconnect(self, code):
         await self.channel_layer.group_discard(

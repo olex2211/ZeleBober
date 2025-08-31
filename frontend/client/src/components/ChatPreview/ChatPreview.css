@@ -1,0 +1,43 @@
+.chat-preview {
+    display: flex;
+    height: max-content;
+    padding: 8px 24px;
+    column-gap: 20px;
+}
+
+.chat-preview:hover {
+    background-color: rgb(245, 245, 245);
+}
+
+.chat-preview img {
+    display: flex;
+    border-radius: 50%;
+    aspect-ratio: 1;
+    width: 20%;
+}
+
+.chat-preview-body {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    justify-content: center;
+    overflow: hidden;
+    line-height: normal;
+}
+
+.preview-body-title {
+    font-size: 14px;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.preview-body-msg {
+    font-size: 13px;
+    font-weight: 400;
+    color: rgb(115, 115, 115);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

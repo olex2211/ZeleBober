@@ -8,14 +8,19 @@ User = get_user_model()
 
 class JWTAuthMiddleware(BaseMiddleware):
     async def resolve_scope(self, scope):
-        headers = dict(scope.get("headers", []))
-        auth_header = headers.get(b'authorization', b'').decode()
+        auth_header = None
+        subprotocols = scope.get("subprotocols", [])
+        if len(subprotocols) >= 2 and subprotocols[0].lower() == "bearer":
+            auth_header = f"{subprotocols[0]} {subprotocols[1]}"
         scope['user'] = await self.get_user_from_header(auth_header)
         return scope
 
     @database_sync_to_async
     def get_user_from_header(self, auth_header):
-        if auth_header.startswith('Bearer '):
+        if not auth_header:
+            return AnonymousUser()
+        
+        if auth_header.startswith('Bearer ') or auth_header.startswith('bearer '):
             token = auth_header.split(' ')[1]
             try:
                 access_token = AccessToken(token)
