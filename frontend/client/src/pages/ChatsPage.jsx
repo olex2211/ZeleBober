@@ -30,7 +30,7 @@ export default function ChatsPage() {
           <div className="chats-container flex flex-1 h-full overflow-hidden">
             {isLoading ? <div>LOADING</div> : <>
                 <ChatFeed chats={chats} setActiveChat={setActiveChat} />
-                {activeChat && <Chat chat={activeChat} />}
+                {activeChat && <Chat key={activeChat.id} chat={activeChat} />}
             </>}
           </div>
         </main>

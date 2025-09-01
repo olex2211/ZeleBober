@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from users.serializers import UserSerializer
 from .models import Chat, ChatMessage
 
 class ChatMessageSerializer(serializers.ModelSerializer):
@@ -14,6 +15,7 @@ class ChatMessageSerializer(serializers.ModelSerializer):
 
 class ChatSerializer(serializers.ModelSerializer):
     last_message = serializers.SerializerMethodField()
+    members = UserSerializer(many=True, read_only=True)
     
     class Meta:
         model = Chat

@@ -7,6 +7,10 @@
     padding: 12px;
 }
 
+.sidebar-container.small {
+    width: max-content !important;
+}
+
 .logo-container {
     display: flex;
     column-gap: 10px;

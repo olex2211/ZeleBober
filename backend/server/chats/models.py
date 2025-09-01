@@ -16,7 +16,7 @@ class Chat(models.Model):
 class Message(models.Model):
     author = None
     likes = None
-    text = models.CharField(max_length=300)
+    text = models.CharField(max_length=1000)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -27,7 +27,6 @@ class Message(models.Model):
 
 class ChatMessage(Message):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='messages')
-    # likes = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='liked_messages')
     chat = models.ForeignKey(Chat, on_delete=models.CASCADE, related_name='messages')
 
     

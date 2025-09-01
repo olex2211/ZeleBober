@@ -19,7 +19,6 @@ class Post(models.Model):
 
 class Comment(Message):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='comments')
-    # likes = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='liked_comments')
     post = models.ForeignKey(Post, on_delete=models.CASCADE,  related_name='comments')
 
     

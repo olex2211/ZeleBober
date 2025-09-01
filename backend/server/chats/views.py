@@ -2,12 +2,11 @@ from rest_framework.generics import (
     ListAPIView, RetrieveAPIView,
     CreateAPIView, UpdateAPIView, DestroyAPIView
     )
-from rest_framework.permissions import IsAuthenticated
-from django.db.models import OuterRef, Subquery
+# from rest_framework.permissions import IsAuthenticated
 from django.shortcuts import get_object_or_404
 from .models import Chat, ChatMessage
 from .serializers import ChatSerializer, ChatMessageSerializer
-from .permissions import IsMember, BelongsToChat
+# from .permissions import IsMember, BelongsToChat
 
 
 class ChatListAPIView(ListAPIView):

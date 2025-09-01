@@ -81,7 +81,7 @@ export default function PostWindow({post, comments, setComments, closePost}) {
                 <p className="created-time px-[14px] pb-[14px]">{timeAgo(post.created_at)}</p>
                 <form className="add-comment" onSubmit={handleSubmit}>
                     <img src={user.photo} />
-                    <textarea name="text" placeholder="Додайте коментар..." required></textarea>
+                    <textarea maxLength={1000} name="text" placeholder="Додайте коментар..." required></textarea>
                     <button type="submit">Опублікувати</button>
                 </form>
             </div>

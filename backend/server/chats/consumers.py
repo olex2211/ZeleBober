@@ -2,7 +2,8 @@ import json
 from channels.generic.websocket import AsyncWebsocketConsumer
 from channels.db import database_sync_to_async
 from django.contrib.auth import get_user_model
-from .models import Chat, ChatMessage
+from rest_framework.exceptions import ValidationError
+from .models import Chat
 from .serializers import ChatMessageSerializer
 
 User = get_user_model()
@@ -60,23 +61,35 @@ class ChatConsumer(AsyncWebsocketConsumer):
             await self.channel_layer.group_send(
                 self.room_group_name,
                 {
-                    'type': 'chat_message',
+                    'type': 'message',
                     'message': chat_message
                 }
             )
         except json.JSONDecodeError:
             await self.send_json_error("Invalid JSON", code=400)
+        except ValidationError as e:
+            await self.send_json_error(e.detail, code=400)
         except ValueError as e:
             await self.send_json_error(str(e), code=400)
         except Exception as e:
+            print(str(e))
             await self.send_json_error("Server error", code=500)
 
-    async def chat_message(self, event):
-        await self.send(text_data=json.dumps(event['message'], ensure_ascii=False))
+    async def message(self, event):
+        await self.send(text_data=json.dumps({
+            "type": "message",
+            "message": event['message']
+        }, ensure_ascii=False))
 
     async def send_json_error(self, error_message, code):
+        if isinstance(error_message, (dict, list)):
+            error = error_message
+        else:
+            error = str(error_message)
+        
         await self.send(text_data=json.dumps({
-            "error": error_message,
+            "type": "error",
+            "error": error,
             "code": code
         }, ensure_ascii=False))
 
@@ -98,5 +111,5 @@ class ChatConsumer(AsyncWebsocketConsumer):
         }
         serializer = ChatMessageSerializer(data=data)
         serializer.is_valid(raise_exception=True)
-        message = serializer.save()
-        return ChatMessageSerializer(message).data
+        chat_message = serializer.save()
+        return ChatMessageSerializer(chat_message).data

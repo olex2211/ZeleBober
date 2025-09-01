@@ -5,7 +5,7 @@ export default function ChatFeed({chats, setActiveChat}) {
 
     return (
       <>
-        <div className="chat-feed flex flex-col w-[25%]">
+        <div className="chat-feed flex flex-col w-[23%] min-w-[290px] max-w-[390px]">
             <div className="chat-feed-header">lesykkk_</div>
             <div className="chat-feed-title">Повідомлення</div>
             <div className="chat-feed-scroll">
