@@ -5,6 +5,7 @@
     min-height: 100%;
     border-right: 1px solid rgb(210, 210, 210);
     padding: 12px;
+    min-width: min-content;
 }
 
 .sidebar-container.small {

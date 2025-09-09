@@ -1,9 +1,12 @@
 from django.conf import settings
 from django.db import models
 
+
 class Chat(models.Model):
-    members = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='chats')
     title = models.CharField(max_length=50)
+    photo = models.ImageField(upload_to="uploads/chats/", blank=True, null=True)
+    members = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='chats')
+    private = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     

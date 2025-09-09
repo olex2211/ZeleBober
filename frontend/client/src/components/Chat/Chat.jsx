@@ -3,9 +3,12 @@ import { useEffect, useState, useRef } from "react";
 import { fetchChatMessages } from "../../api/chats";
 import useAuth from "../../context/useAuth";
 import Message from "../Message/Message";
+import MemberPreview from "../MemberPreview/MemberPreview";
 import InfoButton from "../../assets/info-button.svg"
 
 export default function Chat({chat}) {
+    console.log(chat);
+    
     const {authFetch} = useAuth();
     const [isLoading, setIsLoading] = useState(true);
     const [messages, setMessages] = useState([]);
@@ -13,6 +16,7 @@ export default function Chat({chat}) {
     const [inputValue, setInputValue] = useState("");
     const {accessToken} = useAuth();
     const messagesEndRef = useRef(null);
+    const [openInfo, setOpenInfo] = useState(false);
 
     useEffect(() => {
         async function getMessages() {
@@ -83,7 +87,7 @@ export default function Chat({chat}) {
                     <p>{chat.title}</p>
                     <p>_username_</p>
                 </div>
-                <img className="info" src={InfoButton} />
+                <img onClick={() => setOpenInfo(prev => !prev)} className="info" src={InfoButton} />
             </div>
             <div className="chat-messages flex-1 overflow-y-auto pt-[20px]">
                 {messages.map((message, index) => {
@@ -112,6 +116,22 @@ export default function Chat({chat}) {
                 </div>
             </div>
         </div>
+        {openInfo && <div className="chat-sidebar">
+            <div className="chat-sidebar-header">
+                Докладніше
+            </div>
+            <div className="chat-sidebar-body">
+                <div className="members-title">Учасники</div>
+                <div className="members-container">
+                {chat.members.map((member, index) =>
+                    <MemberPreview key={index} member={member}/>
+                )}
+                </div>
+            </div>
+            <div className="chat-sidebar-footer">
+                <button>Видалити чат</button>
+            </div>
+        </div>}
       </>
     );
 }

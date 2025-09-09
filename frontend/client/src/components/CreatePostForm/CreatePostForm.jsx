@@ -59,13 +59,13 @@ export default function CreatePostForm() {
                     <div className="photo"style={{backgroundImage: imagePreview ? `url(${imagePreview})` : "none", backgroundSize: "cover", backgroundPosition: "center",}}>
                         <img hidden/>
                         {!imagePreview && (
-                            <>
-                                <img className="add-image" src={addImage} />
-                                <label>
-                                    <span>Завантажити файл</span>
-                                    <input type="file" name="photo" hidden onChange={handleFileChange} required/>
-                                </label>
-                            </>
+                        <>
+                            <img className="add-image" src={addImage} />
+                            <label>
+                                <span>Завантажити файл</span>
+                                <input type="file" name="photo" accept="image/*" hidden onChange={handleFileChange} required/>
+                            </label>
+                        </>
                         )}
                     </div>
                     <div className="description">

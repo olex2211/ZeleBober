@@ -1,0 +1,82 @@
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #ffffff;
+}
+
+.login-body {
+    display: flex;
+}
+
+.zelebober-logo{
+    width: 175px;
+    height: 51px;
+    margin-bottom: 30px;
+}
+
+.login-image{
+    height: 450px;
+}
+
+
+.login-form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 100px;
+    padding: 20px;
+    flex-direction: column;
+   
+}
+
+.login-form form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    outline: none;
+}
+
+.login-form form input {
+    width: 270px;
+    height: 38px;
+    background-color: #fafafa;
+    padding-left: 10px;
+    border: 0.5px solid #dbdbdb;
+    border-radius: 4px;
+    outline: none;
+}
+
+.login-form form button {
+    
+    background-color: rgb(65, 80, 247);
+    height: 32px;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+}
+
+.login-text {
+  margin-top: 50px;
+  text-align: center;       
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.login-text a {
+  color: rgb(65, 80, 247);          
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.login-text a:hover {
+  color: rgb(65, 80, 247);           
+  text-decoration: underline;
+}
+
+.login-text p {
+  margin-top: 0.5rem;
+}

@@ -1,0 +1,44 @@
+.member-preview {
+    display: flex;
+    height: max-content;
+    padding: 8px 24px;
+    column-gap: 20px;
+}
+
+.member-preview:hover {
+    background-color: rgb(245, 245, 245);
+}
+
+.member-preview img {
+    display: flex;
+    border-radius: 50%;
+    width: 56px;
+    aspect-ratio: 1;
+    object-fit: cover;
+}
+
+.member-preview-body {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    justify-content: center;
+    overflow: hidden;
+    line-height: normal;
+}
+
+.member-preview-body-title {
+    font-size: 14px;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.member-preview-body-msg {
+    font-size: 14px;
+    font-weight: 400;
+    color: rgb(115, 115, 115);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

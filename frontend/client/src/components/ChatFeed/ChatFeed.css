@@ -8,6 +8,13 @@
     font-size: 19.5px;
     font-weight: 700;
     padding: 26px 24px 12px;
+    justify-content: space-between;
+}
+
+.chat-feed-header img{
+    aspect-ratio: 1;
+    width: 24px;
+    cursor: pointer;
 }
 
 .chat-feed-title {
