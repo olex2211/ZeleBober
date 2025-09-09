@@ -3,6 +3,7 @@ import { useEffect, useState, useRef } from "react";
 import { fetchChatMessages } from "../../api/chats";
 import useAuth from "../../context/useAuth";
 import Message from "../Message/Message";
+import InfoButton from "../../assets/info-button.svg"
 
 export default function Chat({chat}) {
     const {authFetch} = useAuth();
@@ -82,6 +83,7 @@ export default function Chat({chat}) {
                     <p>{chat.title}</p>
                     <p>_username_</p>
                 </div>
+                <img className="info" src={InfoButton} />
             </div>
             <div className="chat-messages flex-1 overflow-y-auto pt-[20px]">
                 {messages.map((message, index) => {
@@ -106,7 +108,7 @@ export default function Chat({chat}) {
                             if (e.key === "Enter") sendMessage();
                         }}
                     />
-                    <button onClick={sendMessage}>Send</button>
+                    <button onClick={sendMessage}>Надіслати</button>
                 </div>
             </div>
         </div>
