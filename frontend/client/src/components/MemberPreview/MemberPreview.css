@@ -3,6 +3,7 @@
     height: max-content;
     padding: 8px 24px;
     column-gap: 20px;
+    cursor: pointer;
 }
 
 .member-preview:hover {

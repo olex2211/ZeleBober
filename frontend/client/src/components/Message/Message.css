@@ -43,7 +43,9 @@
     border-radius: 50%;
     object-fit: cover;
     height: 28px;
+    margin: 2px 0;
     aspect-ratio: 1;
+    cursor: pointer;
 }
 
 .message-container div {

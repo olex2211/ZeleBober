@@ -3,7 +3,9 @@ import { useState, useRef, useEffect } from "react";
 import PostDetail from "../PostDetail/PostDetail";
 import useAuth from "../../context/useAuth";
 import { fetchComments } from "../../api/posts";
+import { fetchPrivateChat } from "../../api/chats";
 import { AnimatePresence } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 export default function Profile({userData}) {
     const previousUrl = useRef(window.location.pathname);
@@ -12,8 +14,9 @@ export default function Profile({userData}) {
     const lastDigit = postsCount % 10;
     const postsLabel = lastDigit>=1 && lastDigit<=4 ? (lastDigit == 1 ? 'допис': 'дописи') : 'дописів';
     const [comments, setComments] = useState([]);
-    const {authFetch} = useAuth();
+    const {authFetch, user} = useAuth();
     const [activeButton, setActiveButton] = useState("posts");
+    const navigate = useNavigate();
 
     useEffect(() => {
         const handlePopState = () => setPostDetail(null);
@@ -42,7 +45,17 @@ export default function Profile({userData}) {
         window.history.pushState({}, "", previousUrl.current);
     } 
 
-    
+    const createPrivateChat = async () => {
+        try{
+            const response = await authFetch(fetchPrivateChat, {id: userData.id});
+            const privateChat = await response.json();
+            navigate(`/chats/${privateChat.id}`);
+
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
 
     return (
         <>
@@ -50,7 +63,10 @@ export default function Profile({userData}) {
                 <div className="account flex w-full px-[15%]">
                     <img src={userData.photo} />
                     <div className="detail flex flex-col gap-y-[35px] wrap-break-word break-all">
-                        <span className="username">{userData.username}</span>
+                        <div className="detail-header">
+                            <span className="username">{userData.username}</span>
+                            {(user.id != userData.id) ? <button onClick={createPrivateChat}>Повідомлення</button> : <></>}
+                        </div>
                         <span className="flex">{postsCount}&nbsp;<p className="text-[#737373]">{postsLabel}</p></span>
                         <span className="name">{userData.first_name} {userData.last_name}</span>
                     </div>

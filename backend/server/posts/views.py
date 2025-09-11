@@ -1,6 +1,5 @@
 from django.shortcuts import get_object_or_404
-from rest_framework.generics import (ListAPIView, RetrieveAPIView,
-                                     CreateAPIView, UpdateAPIView, DestroyAPIView)
+from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -70,20 +69,3 @@ class ToggleLikeAPIView(APIView):
             'is_liked': is_liked,
             'likes_count': post.likes.count(),
         }, status=status.HTTP_200_OK)
-
-
-
-
-
-
-
-
-
-class PostUpdateAPIView(UpdateAPIView):
-    queryset = Post.objects.all()
-    serializer_class = PostSerializer
-
-
-class PostDestroyAPIView(DestroyAPIView):
-    queryset = Post.objects.all()
-    serializer_class = PostSerializer

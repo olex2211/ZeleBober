@@ -1,15 +1,15 @@
 import "./Message.css";
 import useAuth from "../../context/useAuth";
+import { useNavigate } from "react-router-dom";
 
-export default function Message({message, chat, isSameAuthor}) {
+export default function Message({message, isSameAuthor}) {
     const {user} = useAuth();
-    const author = chat.members.find(member => member.id === message.author);
+    const navigate = useNavigate();
 
     return (
-        <div className={"message-container" + (author.id === user.id ? " right": "") + (isSameAuthor ? " sameAuthor" : "")}>
-            <img src={author.photo}/>
+        <div className={"message-container" + (message.author.id === user.id ? " right" : "") + (isSameAuthor ? " sameAuthor" : "")}>
+            <img src={message.author.photo} onClick={() => navigate(`/users/${message.author.id}`, { replace: true })}/>
             <div className="message-text">{message.text}</div>
         </div>
     )
-
 }

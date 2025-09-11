@@ -5,11 +5,11 @@ import useAuth from "../../context/useAuth";
 import Message from "../Message/Message";
 import MemberPreview from "../MemberPreview/MemberPreview";
 import InfoButton from "../../assets/info-button.svg"
+import { fetchLeaveChat } from "../../api/chats";
+import { useNavigate } from "react-router-dom";
 
-export default function Chat({chat}) {
-    console.log(chat);
-    
-    const {authFetch} = useAuth();
+export default function Chat({chat}) {    
+    const {authFetch, user} = useAuth();
     const [isLoading, setIsLoading] = useState(true);
     const [messages, setMessages] = useState([]);
     const [socket, setSocket] = useState(null);
@@ -17,6 +17,8 @@ export default function Chat({chat}) {
     const {accessToken} = useAuth();
     const messagesEndRef = useRef(null);
     const [openInfo, setOpenInfo] = useState(false);
+    const navigate = useNavigate();
+    const [otherUser, setOtherUser] = useState(chat.private ? chat.members.find((member) => member.id !== user.id) : null);
 
     useEffect(() => {
         async function getMessages() {
@@ -39,6 +41,9 @@ export default function Chat({chat}) {
 
         ws.onmessage = (event) => {
             const data = JSON.parse(event.data);
+            const member = chat.members.find((member) => member.id === data.message.author.id);
+            data.message.author.photo = member.photo;
+
             if (data.type === "message") {
                 setMessages((prev) => [...prev, data.message]);
             } else if (data.type === "error") {
@@ -78,21 +83,31 @@ export default function Chat({chat}) {
         messagesEndRef.current?.scrollIntoView({ behavior: "auto" });
     }, [messages]);
 
+    async function handleLeaveChat() {
+        try {
+            await authFetch(fetchLeaveChat, {id: chat.id});
+            navigate("/chats", { replace: true });
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
     return (
       <>
         <div className="chat-container">
             <div className="chat-header">
-                <img src="https://scontent.flwo3-1.fna.fbcdn.net/v/t1.15752-9/410209722_742189117298465_9218067172096842077_n.jpg?stp=dst-jpg_s100x100_tt6&_nc_cat=111&ccb=1-7&_nc_sid=ec592c&_nc_ohc=7lHEqudraU4Q7kNvwF0N1h6&_nc_oc=Adnv7ZN_czAsdmtK-Sv84A0D_z4lbMroYTY2cDYdW9afQcd-21RBZ0SXMNroTf_SgRY&_nc_zt=23&_nc_ht=scontent.flwo3-1.fna&oh=03_Q7cD3AF1sKn_mDaDbIuYLrFxcBAqEDFiVtyvB4gW6_GN0RRS0g&oe=68DBDE71"/>
+                <img src={chat.private ? otherUser.photo : chat.photo}/>
                 <div className="chat-header-body">
-                    <p>{chat.title}</p>
-                    <p>_username_</p>
+                    <p>{chat.private ? `${otherUser.first_name} ${otherUser.last_name}` : chat.title}</p>
+                    {chat.private && <p>{otherUser.username}</p>}
+                    {/* <p>{chat.private ? otherUser.last_name : chat.title}</p> */}
                 </div>
                 <img onClick={() => setOpenInfo(prev => !prev)} className="info" src={InfoButton} />
             </div>
             <div className="chat-messages flex-1 overflow-y-auto pt-[20px]">
                 {messages.map((message, index) => {
                     const prevMessage = messages[index - 1];
-                    const isSameAuthor = prevMessage?.author === message.author;
+                    const isSameAuthor = prevMessage?.author.id === message.author.id;
                     
                     return (
                         <Message key={index} message={message} chat={chat} isSameAuthor={isSameAuthor}/>
@@ -129,7 +144,7 @@ export default function Chat({chat}) {
                 </div>
             </div>
             <div className="chat-sidebar-footer">
-                <button>Видалити чат</button>
+                <button onClick={handleLeaveChat}>Залишити чат</button>
             </div>
         </div>}
       </>

@@ -14,6 +14,7 @@ export default function AddChatWindow({closeFunction}) {
     const [file, setFile] = useState(null);
     const [imagePreview, setImagePreview] = useState(null);
     const navigate = useNavigate();
+    const [title, setTitle] = useState("");
 
     useEffect(() => {
         async function getData() {
@@ -43,8 +44,9 @@ export default function AddChatWindow({closeFunction}) {
 
         console.log(formData);
         try {
-            await authFetch(fetchCreateChat, {formData})
-            navigate("/chats", { replace: true });
+            await authFetch(fetchCreateChat, {formData});
+            closeFunction();
+            navigate("/chats", { replace: true }); 
         }
         catch (error) {
             console.log(error);
@@ -78,7 +80,7 @@ export default function AddChatWindow({closeFunction}) {
                                 <span>{`${!imagePreview?"Вибрати":""}`}</span>
                                 <input type="file" name="photo" accept="image/*" hidden onChange={handleFileChange} required/>
                             </label>
-                            <input className="title" name="title" type="text" placeholder="Введіть назву чату"/>
+                            <input className="title" name="title" type="text" placeholder="Введіть назву чату" value={title} onChange={(e) => setTitle(e.target.value)} required/>
                         </div>
                         <p>Виберіть учасників</p>
                         <div className="members-container">
@@ -88,7 +90,7 @@ export default function AddChatWindow({closeFunction}) {
                         </div>
                     </div>
                     <div className="add-chat-footer">
-                        <button type="submit" disabled={!members.length || !file}>Створити</button>
+                        <button type="submit" disabled={!members.length || !file || !title}>Створити</button>
                     </div>
                 </form>
             </div>

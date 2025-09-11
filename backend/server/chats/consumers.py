@@ -101,12 +101,11 @@ class ChatConsumer(AsyncWebsocketConsumer):
         except Chat.DoesNotExist:
             return False
 
-    
     @database_sync_to_async
     def create_chat_message(self, chat_id, user_id, text):
         data = {
             "chat": chat_id,
-            "author": user_id,
+            "author_id": user_id,
             "text": text
         }
         serializer = ChatMessageSerializer(data=data)

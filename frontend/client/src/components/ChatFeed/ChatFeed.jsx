@@ -5,7 +5,7 @@ import addChat from "../../assets/add-chat.svg"
 import { useState } from "react";
 import AddChatWindow from "../AddChatWindow/AddChatWindow";
 
-export default function ChatFeed({chats, setActiveChat}) {
+export default function ChatFeed({chats, activeChat, setActiveChat}) {
     const { user } = useAuth();
     const [showAddChatWindow, setShowAddChatWindow] = useState(false);
 
@@ -18,7 +18,15 @@ export default function ChatFeed({chats, setActiveChat}) {
             <div className="chat-feed-title">Повідомлення</div>
             <div className="chat-feed-scroll">
             {chats.map((chat, index) => (
-                <ChatPreview onClick={() => setActiveChat(chat)} chat={chat} key={index}/>
+                <ChatPreview
+                    onClick={() => {
+                        setActiveChat(chat);
+                        window.history.pushState({}, "", `/chats/${chat.id}`);
+                    }}
+                    chat={chat}
+                    key={index}
+                    activeChat={activeChat}
+                />
             ))}
             </div>
         </div>

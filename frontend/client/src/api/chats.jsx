@@ -60,3 +60,44 @@ export async function fetchCreateChat({ accessToken, formData }) {
 
     return response;
 }
+
+export async function fetchLeaveChat({ accessToken, id }) {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}chats/${id}/leave/`, {
+        method: "DELETE",
+        headers: {
+            'Authorization': `Bearer ${accessToken}`,
+        },
+    });
+
+    if (!response.ok) {
+        throw {
+            message: `API fetch leave chat error`,
+            status: response.status,
+            statusText: response.statusText,
+            body: await response.json()
+        };
+    }
+
+    return response;
+}
+
+export async function fetchPrivateChat({ accessToken, id }) {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}chats/private/${id}/`, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${accessToken}`,
+        },
+    });
+
+    if (!response.ok) {
+        throw {
+            message: `API fetch private chat error`,
+            status: response.status,
+            statusText: response.statusText,
+            body: await response.json()
+        };
+    }
+
+    return response;
+}

@@ -6,15 +6,22 @@ from .models import Chat, ChatMessage
 User = get_user_model()
 
 class ChatMessageSerializer(serializers.ModelSerializer):
+    author = UserSerializer(read_only=True)
+    author_id = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), write_only=True)
+    
     class Meta:
         model = ChatMessage
-        fields = ['id', 'text', 'chat', 'author', 'created_at', 'updated_at']
+        fields = ['id', 'text', 'chat', 'author', 'created_at', 'updated_at', "author_id"]
         read_only_fields = ['created_at', 'updated_at']
         extra_kwargs = {
             'text': {'required': True},
             'chat': {'required': True},
-            'author': {'required': True},
         }
+    
+    def create(self, validated_data):
+        author = validated_data.pop('author_id')
+        return ChatMessage.objects.create(author=author, **validated_data)
+
 
 class ChatSerializer(serializers.ModelSerializer):
     last_message = serializers.SerializerMethodField()
@@ -23,7 +30,7 @@ class ChatSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Chat
-        fields = ['id', 'title', 'members', 'created_at', 'updated_at', 'last_message', 'private', 'member_ids']
+        fields = ['id', 'title', 'members', 'photo', 'created_at', 'updated_at', 'last_message', 'private', 'member_ids']
         read_only_fields = ['created_at', 'updated_at', 'last_message']
         extra_kwargs = {
             'title': {'required': True},
