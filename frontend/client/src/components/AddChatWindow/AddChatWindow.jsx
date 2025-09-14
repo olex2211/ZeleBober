@@ -8,7 +8,7 @@ import MemberPreviewSmall from "../MemberPreviewSmall/MemberPreviewSmall";
 import blackX from "../../assets/black-x.svg"
 
 export default function AddChatWindow({closeFunction}) {
-    const { user, authFetch } = useAuth();
+    const { authFetch } = useAuth();
     const [ users, setUsers ] = useState([]);
     const [ members, setMembers ] = useState([]);
     const [file, setFile] = useState(null);
@@ -16,10 +16,13 @@ export default function AddChatWindow({closeFunction}) {
     const navigate = useNavigate();
     const [title, setTitle] = useState("");
 
+    console.log(users);
+    
+
     useEffect(() => {
         async function getData() {
             const response = await authFetch(fetchUsers);
-            setUsers(await response.json());
+            setUsers((await response.json()).results);
         }
 
         getData();

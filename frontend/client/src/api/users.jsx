@@ -16,8 +16,8 @@ export async function fetchCreateUser(formData) {
     return response;
 }
 
-export async function fetchUsers({accessToken}) {
-    const response = await fetch(`${import.meta.env.VITE_API_URL}users/`, {
+export async function fetchUsers({accessToken, url = `${import.meta.env.VITE_API_URL}users?search=`, search = ""}) {
+    const response = await fetch(url + search, {
         method: "GET",
         headers: {
             'Content-Type': 'application/json',

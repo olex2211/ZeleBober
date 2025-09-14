@@ -1,0 +1,23 @@
+.search-title {
+    display: flex;
+    font-weight: 600;
+    font-size: 34px;
+    align-self: center;
+    line-height: normal;
+    margin-bottom: 20px;
+}
+
+.search-feed input {
+    display: flex;
+    width: 100%;
+    border: 1px solid rgb(239, 239, 239);
+    outline: none;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 20px;
+    justify-self: center;
+}
+
+.member-preview {
+    border-radius: 12px !important;
+}

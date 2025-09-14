@@ -26,22 +26,19 @@ export default function LoginForm() {
         <>
             <div className="login-container">
                 <div className="login-body">
-
-                    
                     <div className="login-img">
-                        <img src={logo} alt="" className="login-image" />
+                        <img src={logo} className="login-image" />
                     </div>
                     <div className="login-form">
                         <img src={zelebober} alt="" className="zelebober-logo" />
                         <form onSubmit={handleLogin}>
-                            <p className="text-red-800">{errorMessage?.detail}</p>
+                            <p className="login-error text-red-800">{errorMessage?.detail}</p>
                             <input type="text" name="username" placeholder="Username" />
                             <input type="text" name="password" placeholder="Password" />
                             <button type="submit">Увійти</button>
                         </form>
                         <div className="login-text">
-                            <Link to="#!">Забули пароль?</Link>
-                            <p>Не маєте облікового запису? <Link href="/registration">Зареєструйтеся</Link></p>
+                            <p>Не маєте облікового запису? <Link to="/registration">Зареєструйтеся</Link></p>
                         </div>
                     </div>
                 </div>

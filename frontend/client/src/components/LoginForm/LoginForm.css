@@ -11,14 +11,15 @@
     display: flex;
 }
 
-.zelebober-logo{
+.zelebober-logo {
     width: 175px;
     height: 51px;
     margin-bottom: 30px;
 }
 
-.login-image{
+.login-image {
     height: 450px;
+    object-fit: scale-down;
 }
 
 
@@ -34,13 +35,13 @@
 
 .login-form form {
     display: flex;
+    width: 300px;
     flex-direction: column;
     gap: 15px;
     outline: none;
 }
 
 .login-form form input {
-    width: 270px;
     height: 38px;
     background-color: #fafafa;
     padding-left: 10px;
@@ -50,12 +51,15 @@
 }
 
 .login-form form button {
-    
     background-color: rgb(65, 80, 247);
     height: 32px;
     border-radius: 10px;
     color: white;
     cursor: pointer;
+}
+
+.login-form form button:hover {
+    background-color: rgb(94, 108, 255);
 }
 
 .login-text {

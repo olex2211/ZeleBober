@@ -3,6 +3,7 @@ import PrivateRoute from "./utils/PrivateRoute";
 import HomePage from "./pages/HomePage";
 import UserPage from "./pages/UserPage";
 import ChatsPage from "./pages/ChatsPage";
+import SearchPage from "./pages/SearchPage";
 import CreatePostPage from "./pages/CreatePostPage";
 import LoginPage from "./pages/LoginPage";
 import { AuthProvider } from "./context/AuthContext.jsx";
@@ -21,7 +22,8 @@ function AppRoutes() {
           <Route path="/posts/create" element={<CreatePostPage />} />
           <Route path="/users/:id" element={<UserPage />} />
           <Route path="/chats/:id" element={<ChatsPage key={location.key} />} />
-          <Route path="/chats/" element={<ChatsPage key={location.key} />} />
+          <Route path="/chats" element={<ChatsPage key={location.key} />} />
+          <Route path="/search" element={<SearchPage />} />
         </Route>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/registration" element={<RegistrationPage />} />

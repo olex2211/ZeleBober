@@ -1,9 +1,8 @@
+import { throttle } from "lodash";
 import { useState, useEffect} from 'react';
-import {fetchPosts} from "../../api/posts";
 import useAuth from "../../context/useAuth";
-import {throttle} from "lodash";
 
-export default function ScrollPagination({scrollRef, children}) {
+export default function ScrollPagination({scrollRef, children, fetchFunction, search=undefined}) {
     const [data, setData] = useState([]);
     const [page, setPage] = useState(0);
     const {authFetch} = useAuth();
@@ -12,7 +11,7 @@ export default function ScrollPagination({scrollRef, children}) {
     useEffect(() => {
         async function getData() {
             if (page && data.next) {
-                const response = await authFetch(fetchPosts, {url: data.next});
+                const response = await authFetch(fetchFunction, {url: data.next});
                 const newData = await response.json();
                 setData(prev => ({
                     results: [...prev.results, ...newData.results],
@@ -21,15 +20,13 @@ export default function ScrollPagination({scrollRef, children}) {
                 }));
 
             } else if (!page) {
-                setData(await (await authFetch(fetchPosts)).json());
+                setData(await (await authFetch(fetchFunction, { search: search })).json());
             }
             setIsLoading(false);
         }
 
-        console.log(data);
-        console.log("Fetch");
         getData()
-    }, [page]);
+    }, [page, search]);
 
 
     useEffect(() => {
@@ -41,7 +38,7 @@ export default function ScrollPagination({scrollRef, children}) {
                 console.log("scroll");
                 setPage(prevPage => prevPage + 1);
             }
-        }, 200);
+        }, 300);
 
         el.addEventListener("scroll", handleScroll);
         return () => el.removeEventListener("scroll", handleScroll);

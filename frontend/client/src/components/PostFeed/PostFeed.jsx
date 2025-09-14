@@ -3,8 +3,9 @@ import { useState, useRef, useEffect } from "react";
 import PostDetail from "../PostDetail/PostDetail";
 import ScrollPagination from "../ScrollPagination/ScrollPagination";
 import useAuth from "../../context/useAuth";
-import { fetchComments } from "../../api/posts";
+import { fetchPosts, fetchComments } from "../../api/posts";
 import { AnimatePresence } from "framer-motion";
+
 
 export default function PostFeed({scrollRef}) {
     const previousUrl = useRef(window.location.pathname);
@@ -34,12 +35,12 @@ export default function PostFeed({scrollRef}) {
         setPostDetail(null);
         setComments([]);
         window.history.pushState({}, "", previousUrl.current);
-    } 
+    }
     
     return (
       <>
         <div className="post-feed flex flex-col w-full pt-[15px] px-[25%]">
-            <ScrollPagination scrollRef={scrollRef}>
+            <ScrollPagination scrollRef={scrollRef} fetchFunction={fetchPosts}>
                 {({ element, index }) => (
                     <Post key={index} post={element} openPost={openPost} />
                 )}
