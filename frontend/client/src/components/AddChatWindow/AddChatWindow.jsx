@@ -1,33 +1,23 @@
 import "./AddChatWindow.css"
-import { useState, useEffect } from "react";
+import { useState, useRef, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
+import { debounce } from "lodash";
 import { fetchUsers } from "../../api/users";
 import { fetchCreateChat } from "../../api/chats";
 import useAuth from "../../context/useAuth";
-import { useNavigate } from "react-router-dom";
+import ScrollPagination from "../ScrollPagination/ScrollPagination";
 import MemberPreviewSmall from "../MemberPreviewSmall/MemberPreviewSmall";
 import blackX from "../../assets/black-x.svg"
 
 export default function AddChatWindow({closeFunction}) {
+    const navigate = useNavigate();
+    const scrollRef = useRef(null);
     const { authFetch } = useAuth();
-    const [ users, setUsers ] = useState([]);
     const [ members, setMembers ] = useState([]);
+    const [title, setTitle] = useState("");
+    const [search, setSearch] = useState("");
     const [file, setFile] = useState(null);
     const [imagePreview, setImagePreview] = useState(null);
-    const navigate = useNavigate();
-    const [title, setTitle] = useState("");
-
-    console.log(users);
-    
-
-    useEffect(() => {
-        async function getData() {
-            const response = await authFetch(fetchUsers);
-            setUsers((await response.json()).results);
-        }
-
-        getData();
-    }, []);
-
 
     function toggleMember(memberId) {
         setMembers(prev =>
@@ -68,6 +58,15 @@ export default function AddChatWindow({closeFunction}) {
         }
     };
 
+    const debouncedSetSearch = useMemo(
+        () => debounce((value) => setSearch(value), 400), 
+        []
+    );
+
+    const handleSearch = async (e) => {
+        debouncedSetSearch(e.target.value);
+    }
+
     return(
         <>
             <div className="add-chat-container">
@@ -85,11 +84,17 @@ export default function AddChatWindow({closeFunction}) {
                             </label>
                             <input className="title" name="title" type="text" placeholder="Введіть назву чату" value={title} onChange={(e) => setTitle(e.target.value)} required/>
                         </div>
-                        <p>Виберіть учасників</p>
-                        <div className="members-container">
-                        {users.map((member, index) =>
-                            <MemberPreviewSmall key={index} member={member} isSelected={members.includes(member.id)} onToggle={() => toggleMember(member.id)}/>
-                        )}
+                        <div className="user-search">
+                            <p>Виберіть учасників:</p>
+                            <input type="text" name="search" placeholder="Пошук користувача..." onChange={handleSearch} />
+                        </div>
+                        
+                        <div className="members-container" ref={scrollRef}>
+                            <ScrollPagination scrollRef={scrollRef} fetchFunction={fetchUsers} search={search} key={search}>
+                                {({ element, index }) => (
+                                    <MemberPreviewSmall key={index} member={element} isSelected={members.includes(element.id)} onToggle={() => toggleMember(element.id)}/>
+                                )}
+                            </ScrollPagination>
                         </div>
                     </div>
                     <div className="add-chat-footer">

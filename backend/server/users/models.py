@@ -35,6 +35,7 @@ class User(AbstractUser):
     )
 
     photo = models.ImageField(upload_to="uploads/users/", blank=True, null=True)
+    following = models.ManyToManyField("self", symmetrical=False, blank=True, related_name='followers')
 
     REQUIRED_FIELDS = []
     

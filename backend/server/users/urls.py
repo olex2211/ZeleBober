@@ -5,4 +5,5 @@ urlpatterns = [
     path('', views.UserListAPIView.as_view(), name='user-list'),
     path('<int:pk>/', views.UserRetrieveAPIView.as_view(), name='user-detail'),
     path('registration/', views.UserCreateAPIView.as_view(), name='user-create'),
+    path('<int:pk>/follow/', views.ToggleFollowAPIView.as_view(), name='toggle-follow-user'),
 ]

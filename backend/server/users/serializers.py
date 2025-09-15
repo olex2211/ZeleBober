@@ -4,6 +4,13 @@ from django.contrib.auth.password_validation import validate_password
 
 User = get_user_model()
 
+# class UserShortSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = User
+#         fields = ['id', 'username', 'email', 'first_name', 'last_name', 'photo', 'last_login', 'date_joined']
+#         read_only_fields = fields
+
+
 class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(
         write_only=True,
@@ -11,9 +18,13 @@ class UserSerializer(serializers.ModelSerializer):
         validators=[validate_password],
     )
     
+    followers_count = serializers.SerializerMethodField()
+    following_count = serializers.SerializerMethodField()
+    is_following = serializers.SerializerMethodField()
+    
     class Meta:
         model = User
-        fields = ['id', 'username', 'password', 'email', 'first_name', 'last_name', 'photo', 'last_login', 'date_joined']
+        fields = ['id', 'username', 'password', 'email', 'first_name', 'last_name', 'photo', 'last_login', 'date_joined', 'followers_count', 'following_count', 'is_following']
         extra_kwargs = {
             'username': {'required': True},
             'email': {'required': True},
@@ -29,6 +40,18 @@ class UserSerializer(serializers.ModelSerializer):
         user.set_password(password)
         user.save()
         return user
+    
+    def get_followers_count(self, obj):
+        return obj.followers.count()
+
+    def get_following_count(self, obj):
+        return obj.following.count()
+
+    def get_is_following(self, obj):
+        request = self.context.get('request')
+        if request and request.user.is_authenticated:
+            return obj.followers.filter(id=request.user.id).exists()
+        return False
 
 
 class UserPostsSerializer(UserSerializer):

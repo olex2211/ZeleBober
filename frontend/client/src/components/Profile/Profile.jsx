@@ -4,19 +4,31 @@ import PostDetail from "../PostDetail/PostDetail";
 import useAuth from "../../context/useAuth";
 import { fetchComments } from "../../api/posts";
 import { fetchPrivateChat } from "../../api/chats";
+import { fetchFollowUser } from "../../api/users";
 import { AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 
 export default function Profile({userData}) {
-    const previousUrl = useRef(window.location.pathname);
-    const [postDetail, setPostDetail] = useState(null);
-    const postsCount = userData.posts?.length;
-    const lastDigit = postsCount % 10;
-    const postsLabel = lastDigit>=1 && lastDigit<=4 ? (lastDigit == 1 ? 'допис': 'дописи') : 'дописів';
-    const [comments, setComments] = useState([]);
     const {authFetch, user} = useAuth();
-    const [activeButton, setActiveButton] = useState("posts");
     const navigate = useNavigate();
+    const previousUrl = useRef(window.location.pathname);
+
+    const [postDetail, setPostDetail] = useState(null);
+    const [activeButton, setActiveButton] = useState("posts");
+    const [comments, setComments] = useState([]);
+    const [isFollowing, setIsFollowing] = useState(userData.is_following);
+    const [followersCount, setFollowersCount] = useState(userData.followers_count);
+    
+    const postsCount = userData.posts?.length;
+    const postLastDigit = postsCount % 10;
+    const postsLabel = postLastDigit>=1 && postLastDigit<=4 ? (postLastDigit == 1 ? 'допис': 'дописи') : 'дописів';
+
+    const followersLastDigit = followersCount % 10;
+    const followersLabel = followersLastDigit>=1 && followersLastDigit<=4 ? (followersLastDigit == 1 ? 'читач': 'читачі') : 'читачів';
+
+    const followingLastDigit = userData.following_count % 10;
+    const followingLabel = followingLastDigit>=1 && followingLastDigit<=4 ? (followingLastDigit == 1 ? 'стеження': 'стеження') : 'стежень';
+    
 
     useEffect(() => {
         const handlePopState = () => setPostDetail(null);
@@ -54,7 +66,20 @@ export default function Profile({userData}) {
         } catch (error) {
             console.log(error);
         }
+    }
 
+    const toggleFollow = async () => {
+        try {
+            const response = await authFetch(fetchFollowUser, {id: userData.id});
+            const data = await response.json()
+            console.log(data);
+            setIsFollowing(data.is_following);
+            setFollowersCount(data.followers_count);
+            userData.is_following = data.is_following;
+            userData.followers_count = data.followers_count;
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     return (
@@ -66,8 +91,13 @@ export default function Profile({userData}) {
                         <div className="detail-header">
                             <span className="username">{userData.username}</span>
                             {(user.id != userData.id) ? <button onClick={createPrivateChat}>Повідомлення</button> : <></>}
+                            {(user.id != userData.id) ? <button onClick={toggleFollow}>{isFollowing ? "Відстежується" : "Стежити"}</button> : <></>}
                         </div>
-                        <span className="flex">{postsCount}&nbsp;<p className="text-[#737373]">{postsLabel}</p></span>
+                        <div className="flex gap-x-[20px]">
+                            <span className="flex">{postsCount}&nbsp;<p className="text-[#737373]">{postsLabel}</p></span>
+                            <span className="flex">{followersCount}&nbsp;<p className="text-[#737373]">{followersLabel}</p></span>
+                            <span className="flex">{userData.following_count}&nbsp;<p className="text-[#737373]">{followingLabel}</p></span>
+                        </div>
                         <span className="name">{userData.first_name} {userData.last_name}</span>
                     </div>
                 </div>
@@ -84,7 +114,7 @@ export default function Profile({userData}) {
                 ))}
                 <AnimatePresence>
                     {postDetail && (
-                        <PostDetail 
+                        <PostDetail
                             post={postDetail}
                             comments={comments}
                             closePost={closePost}

@@ -46,16 +46,29 @@
     overflow: hidden;
 }
 
-.add-chat-body p {
-    padding: 16px 16px 12px;
-    font-weight: 500;
-    font-size: 14px;
-}
-
 .members-container {
     display: flex;
     flex-direction: column;
     overflow-y: auto !important;
+}
+
+.user-search {
+    display: flex;
+    align-items: center;
+}
+
+.user-search p {
+    padding: 16px 16px 12px;
+    font-weight: 500;
+    font-size: 14px;
+    min-width: fit-content;
+}
+
+.user-search input {
+    padding: 16px 16px 12px 0;
+    height: 100%;
+    outline: none;
+    width: 100%;
 }
 
 .add-chat-footer {

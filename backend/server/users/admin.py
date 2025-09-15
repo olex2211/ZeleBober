@@ -7,5 +7,6 @@ class UserAdmin(BaseUserAdmin):
     model = User
 
     fieldsets = BaseUserAdmin.fieldsets + (
-        (None, {"fields": ("photo",)}),
+        (None, {"fields": ("photo", )}),
+        (None, {"fields": ("following",)}),
     )

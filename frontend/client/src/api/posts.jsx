@@ -20,7 +20,7 @@ export async function fetchPosts({accessToken, url = `${import.meta.env.VITE_API
 }
 
 export async function fetchPostById({accessToken, id}) {
-    const response = await fetch(`${import.meta.env.VITE_API_URL}posts/${id}`, {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}posts/${id}/`, {
         method: "GET",
         headers: {
             'Content-Type': 'application/json',
@@ -108,7 +108,7 @@ export async function fetchCreatePost({ accessToken, formData }) {
 }
 
 export async function fetchLikePost({ accessToken, id }) {
-    const response = await fetch(`${import.meta.env.VITE_API_URL}posts/${id}/like`, {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}posts/${id}/like/`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

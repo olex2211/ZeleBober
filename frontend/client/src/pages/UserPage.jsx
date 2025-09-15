@@ -29,7 +29,7 @@ export default function UserPage() {
         <main className="main-container flex flex-row min-h-full overflow-hidden">
           <SideBar profile={user.id == id}/>
           <div className="profile-container flex flex-col flex-1 h-full overflow-auto">
-            {isLoading ? <div>LOADING</div> : <Profile userData={userData}/>}
+            {isLoading ? <div>LOADING</div> : <Profile userData={userData} />}
           </div>
         </main>
       </>
