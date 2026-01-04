@@ -33,8 +33,8 @@ export default function LoginForm() {
                         <img src={zelebober} alt="" className="zelebober-logo" />
                         <form onSubmit={handleLogin}>
                             <p className="login-error text-red-800">{errorMessage?.detail}</p>
-                            <input type="text" name="username" placeholder="Username" />
-                            <input type="text" name="password" placeholder="Password" />
+                            <input type="text" name="username" placeholder="Username" required/>
+                            <input type="text" name="password" placeholder="Password" required/>
                             <button type="submit">Увійти</button>
                         </form>
                         <div className="login-text">

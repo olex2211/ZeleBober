@@ -41,6 +41,11 @@ class LeaveChatAPIView(APIView):
             return Response({"detail": "You are not a member of this chat."},
                             status=status.HTTP_400_BAD_REQUEST)
 
+        if chat.private:
+            chat.delete()
+            return Response({"detail": "Private chat was deleted."},
+                            status=status.HTTP_200_OK)
+
         chat.members.remove(request.user)
 
         if chat.members.count() == 0:

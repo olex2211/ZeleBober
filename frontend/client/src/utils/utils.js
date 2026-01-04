@@ -20,3 +20,12 @@ export function timeAgo(dateString) {
     if (months < 12) return `${months} м. тому`;
     return `${years} р. тому`;
 }
+
+
+export function getWebSocketUrl(endpoint) {
+    const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+    
+    const host = window.location.host;
+
+    return `${protocol}//${host}${endpoint}`;
+}

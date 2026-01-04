@@ -62,15 +62,15 @@ export default function RegistrationForm() {
                     <input type="file" name="photo" accept="image/*" hidden onChange={handleFileChange} required/>
                 </label>
                 <p className="registration-error text-red-800">{errorMessages?.username}</p>
-                <input type="text" name="username" placeholder="Username" />
+                <input type="text" name="username" placeholder="Username" required/>
                 <p className="registration-error text-red-800">{errorMessages?.password}</p>
-                <input type="text" name="password" placeholder="Password" />
+                <input type="text" name="password" placeholder="Password" required/>
                 <p className="registration-error text-red-800">{errorMessages?.first_name}</p>
-                <input type="text" name="first_name" placeholder="First name" />
+                <input type="text" name="first_name" placeholder="First name" required/>
                 <p className="registration-error text-red-800">{errorMessages?.last_name}</p>
-                <input type="text" name="last_name" placeholder="Last name" />
+                <input type="text" name="last_name" placeholder="Last name" required/>
                 <p className="registration-error text-red-800">{errorMessages?.email}</p>
-                <input type="text" name="email" placeholder="Email" />
+                <input type="text" name="email" placeholder="Email" required/>
                 <button type="submit">Register</button>
               </form>
             </div>

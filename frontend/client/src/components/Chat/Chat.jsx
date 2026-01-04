@@ -7,6 +7,7 @@ import MemberPreview from "../MemberPreview/MemberPreview";
 import InfoButton from "../../assets/info-button.svg"
 import { fetchLeaveChat } from "../../api/chats";
 import { useNavigate } from "react-router-dom";
+import { getWebSocketUrl } from "../../utils/utils";
 
 export default function Chat({chat}) {    
     const {authFetch, user} = useAuth();
@@ -33,7 +34,9 @@ export default function Chat({chat}) {
     useEffect(() => {
         if (isLoading) return;
 
-        const ws = new WebSocket(`${import.meta.env.VITE_WS_URL}chats/${chat.id}/`, ["Bearer", accessToken]);
+        const wsPath = `${import.meta.env.VITE_WS_URL}chats/${chat.id}/`;
+        const wsUrl = getWebSocketUrl(wsPath);
+        const ws = new WebSocket(wsUrl, ["Bearer", accessToken]);
 
         ws.onopen = () => {
             console.log("Connected to chat:", chat.id);
@@ -100,7 +103,6 @@ export default function Chat({chat}) {
                 <div className="chat-header-body">
                     <p>{chat.private ? `${otherUser.first_name} ${otherUser.last_name}` : chat.title}</p>
                     {chat.private && <p>{otherUser.username}</p>}
-                    {/* <p>{chat.private ? otherUser.last_name : chat.title}</p> */}
                 </div>
                 <img onClick={() => setOpenInfo(prev => !prev)} className="info" src={InfoButton} />
             </div>
