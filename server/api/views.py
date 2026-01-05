@@ -12,9 +12,11 @@ class TokenView(TokenObtainPairView):
             response.set_cookie(
                 key='refresh',
                 value=refresh,
-                httponly=True,
+                httponly=settings.REFRESH_TOKEN_COOKIE_HTTPONLY,
                 max_age=settings.SIMPLE_JWT["REFRESH_TOKEN_LIFETIME"]
-            ) # samesite='None', secure=True,
+                samesite=settings.REFRESH_TOKEN_COOKIE_SAMESITE,
+                secure=settings.REFRESH_TOKEN_COOKIE_SECURE,
+            )
         response.data.pop('refresh', None)
         return response
 
