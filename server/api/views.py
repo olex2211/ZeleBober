@@ -13,7 +13,7 @@ class TokenView(TokenObtainPairView):
                 key='refresh',
                 value=refresh,
                 httponly=settings.REFRESH_TOKEN_COOKIE_HTTPONLY,
-                max_age=settings.SIMPLE_JWT["REFRESH_TOKEN_LIFETIME"]
+                max_age=settings.SIMPLE_JWT["REFRESH_TOKEN_LIFETIME"],
                 samesite=settings.REFRESH_TOKEN_COOKIE_SAMESITE,
                 secure=settings.REFRESH_TOKEN_COOKIE_SECURE,
             )

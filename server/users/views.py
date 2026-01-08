@@ -26,7 +26,7 @@ class UserListAPIView(ListAPIView):
         user = self.request.user
         qs = User.objects.all()
         if user.is_authenticated:
-            qs = qs.exclude(id=user.id)  # виключаємо поточного користувача
+            qs = qs.exclude(id=user.id)
         return qs
 
 

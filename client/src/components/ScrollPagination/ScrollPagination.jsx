@@ -35,7 +35,7 @@ export default function ScrollPagination({scrollRef, children, fetchFunction, se
         
         const handleScroll = throttle(() => {
             if (!isLoading && el && el.scrollTop + el.clientHeight > el.scrollHeight - 5) {
-                console.log("scroll");
+                // console.log("scroll");
                 setPage(prevPage => prevPage + 1);
             }
         }, 300);

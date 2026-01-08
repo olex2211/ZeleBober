@@ -18,7 +18,6 @@ export default function PostWindow({post, comments, setComments, closePost}) {
         try {
             const response = await authFetch(fetchLikePost, {id: post.id});
             const data = await response.json()
-            console.log(data);
             setIsLiked(data.is_liked);
             setLikesCount(data.likes_count);
             post.is_liked = !post.is_liked;

@@ -34,13 +34,13 @@ export default function Chat({chat}) {
     useEffect(() => {
         if (isLoading) return;
 
-        // const wsPath = `${import.meta.env.VITE_WS_URL}chats/${chat.id}/`;
-        // const wsUrl = getWebSocketUrl(wsPath);
-        // const ws = new WebSocket(wsUrl, ["Bearer", accessToken]);
-        const ws = new WebSocket(`${import.meta.env.VITE_WS_URL}chats/${chat.id}/`, ["Bearer", accessToken]);
+        const wsPath = `${import.meta.env.VITE_WS_URL}chats/${chat.id}/`;
+        const wsUrl = getWebSocketUrl(wsPath);
+        const ws = new WebSocket(wsUrl, ["Bearer", accessToken]);
+        // const ws = new WebSocket(`${import.meta.env.VITE_WS_URL}chats/${chat.id}/`, ["Bearer", accessToken]);
 
         ws.onopen = () => {
-            console.log("Connected to chat:", chat.id);
+            console.log("Connected to chat");
         };
 
         ws.onmessage = (event) => {
@@ -59,8 +59,8 @@ export default function Chat({chat}) {
             console.error("WebSocket error:", err);
         };
 
-        ws.onclose = (close) => {
-            console.log("WebSocket closed: ", close);
+        ws.onclose = () => {
+            console.log("WebSocket closed");
         };
 
         setSocket(ws);

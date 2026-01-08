@@ -22,10 +22,16 @@ export function timeAgo(dateString) {
 }
 
 
-export function getWebSocketUrl(endpoint) {
-    const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+export function getWebSocketUrl(path) {
+    if (path.startsWith('ws://') || path.startsWith('wss://')) {
+        return path;
+    }
     
-    const host = window.location.host;
+    if (path.startsWith('http://') || path.startsWith('https://')) {
+        return path.replace(/^http/, 'ws');
+    }
 
-    return `${protocol}//${host}${endpoint}`;
+    const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+    const host = window.location.host;
+    return `${protocol}//${host}${path}`;
 }

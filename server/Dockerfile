@@ -1,20 +1,13 @@
-FROM python:3.13-slim
-
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
-
+FROM python:3.13-slim AS base
 WORKDIR /app
-
-RUN pip install --upgrade pip
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
-
 COPY . .
 
-CMD ["daphne", "-b", "0.0.0.0", "-p", "8000", "server.asgi:application"]
+FROM base AS dev
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
 
-# Встановлюємо системні залежності для Postgres та компіляції
-# RUN apt-get update && apt-get install -y \
-#     gcc \
-#     libpq-dev \
-#     && rm -rf /var/lib/apt/lists/*
+FROM base AS prod
+CMD ["sh", "-c", "python manage.py migrate && python manage.py collectstatic --noinput && daphne -b 0.0.0.0 -p 8000 server.asgi:application"]

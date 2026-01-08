@@ -71,8 +71,7 @@ export default function Profile({userData}) {
     const toggleFollow = async () => {
         try {
             const response = await authFetch(fetchFollowUser, {id: userData.id});
-            const data = await response.json()
-            console.log(data);
+            const data = await response.json();
             setIsFollowing(data.is_following);
             setFollowersCount(data.followers_count);
             userData.is_following = data.is_following;

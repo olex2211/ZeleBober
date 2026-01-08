@@ -6,15 +6,12 @@ import environ
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 env = environ.Env()
-environ.Env.read_env(BASE_DIR / ".env")
 
-DEBUG = env('DEBUG')
-
-SECRET_KEY = env('SECRET_KEY')
+DEBUG = env.bool('DEBUG')
+SECRET_KEY = env.str('SECRET_KEY')
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
 
 # Application definition
-
 INSTALLED_APPS = [
     'daphne',
     
@@ -73,9 +70,21 @@ ASGI_APPLICATION = 'server.asgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
-    'default': env.db('DATABASE_URL')
-}
+DB_ENGINE = env.str("DB_ENGINE")
+
+if DB_ENGINE == "sqlite":
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+elif DB_ENGINE == "postgres":
+    DATABASES = {
+        'default': env.db('DATABASE_URL')
+    }
+else:
+    raise ValueError("Set valid DB_ENGINE environment variable")
 
 # DATABASES = {
 #     'default': {
@@ -147,6 +156,9 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
     ],
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+    ],
 }
 
 SIMPLE_JWT = {
@@ -161,12 +173,8 @@ CHANNEL_LAYERS = {
     }
 }
 
-CORS_ALLOWED_ORIGINS = env.list('CORS_ALLOWED_ORIGINS')
-    # "https://example.com",
-    # "https://sub.example.com",
-    # "http://127.0.0.1:9000",
-
-# CORS_ALLOW_CREDENTIALS = True
+# CORS_ALLOWED_ORIGINS = env.list('CORS_ALLOWED_ORIGINS')
+CORS_ALLOW_CREDENTIALS = True
 
 REFRESH_TOKEN_COOKIE_HTTPONLY = True
 REFRESH_TOKEN_COOKIE_SECURE = True
@@ -174,3 +182,5 @@ REFRESH_TOKEN_COOKIE_SAMESITE = 'Strict'
 
 if DEBUG:
     REFRESH_TOKEN_COOKIE_SECURE = False
+
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
