@@ -1,0 +1,37 @@
+services:
+  db:
+    image: postgres:17
+    env_file: .env
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: ./server
+    depends_on:
+      db:
+        condition: service_healthy
+        required: false
+    env_file: .env
+
+  frontend:
+    build:
+      context: ./client
+    depends_on:
+      - backend
+    env_file: .env
+    environment:
+      VITE_API_URL: ${VITE_API_URL:-/api/}
+      VITE_WS_URL: ${VITE_WS_URL:-/ws/}
+  
+volumes:
+  postgres_data:
