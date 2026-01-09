@@ -71,8 +71,8 @@ To get a local copy up and running, follow these simple steps. This project is f
     * **Development Mode (with PostgreSQL)**
 
        Runs the app with a local **PostgreSQL** container.
-    
-       > **❗❗❗ Important:** To use this profile, you **MUST** set `DB_ENGINE=postgres` in your `.env` file. The other credentials should be configured according to your preference:
+  
+       > **❗❗❗ Important:** To use this profile, you **MUST** specify additional environment variables for Postgres in your `.env` file. _`DB_ENGINE` must be set to `postgres`_:
        > ```env
        > DB_ENGINE=postgres
        > DB_USER=admin
@@ -88,6 +88,13 @@ To get a local copy up and running, follow these simple steps. This project is f
     * **Production Mode**
       
        Uses **Nginx** as a reverse proxy to serve the optimized build and static files. **PostgreSQL only**.
+  
+       > **❗❗❗ Important:** To use this profile, you **MUST** specify additional environment variables for Postgres in your `.env` file. _`DB_ENGINE` is always `postgres`_:
+       > ```env
+       > DB_USER=admin
+       > DB_PASSWORD=admin
+       > DB_NAME=postgres
+       > ```
       ```sh
       docker compose -f compose.yaml -f compose.prod.yaml up --build -d
       ```
@@ -131,6 +138,6 @@ Don't forget to give the project a star! Thanks again!
 
 Distributed under the MIT License. See [LICENSE](./LICENSE) for more information.
 
-## Contact
+## Contacts
 
 Project Link: https://github.com/olex2211/ZeleBober
