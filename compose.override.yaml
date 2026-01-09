@@ -8,7 +8,9 @@ services:
     build:
       target: dev
     environment:
-      DATABASE_URL: postgres://${DB_USER}:${DB_PASSWORD}@db:5432/${DB_NAME}
+      DEBUG: 1
+      DB_ENGINE: ${DB_ENGINE:-sqlite}
+      DATABASE_URL: ${DB_ENGINE}://${DB_USER}:${DB_PASSWORD}@db:5432/${DB_NAME}
     ports:
       - "${BACKEND_PORT:-8000}:8000"
     volumes:
