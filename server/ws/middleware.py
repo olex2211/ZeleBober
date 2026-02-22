@@ -21,8 +21,8 @@ class JWTAuthMiddleware(BaseMiddleware):
             return AnonymousUser()
         
         if auth_header.startswith('Bearer ') or auth_header.startswith('bearer '):
-            token = auth_header.split(' ')[1]
             try:
+                token = auth_header.split(' ')[1]
                 access_token = AccessToken(token)
                 return User.objects.get(id=access_token['user_id'])
             except Exception:

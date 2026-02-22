@@ -18,8 +18,3 @@ RUN npm run build
 FROM alpine AS prod
 COPY --from=build /app/dist /app/dist
 CMD ["/bin/sh", "-c", "cp -a /app/dist/. /dist/"]
-
-# FROM nginx:alpine AS prod
-# COPY --from=build /app/dist /usr/share/nginx/html
-# EXPOSE 80
-# CMD ["nginx", "-g", "daemon off;"]
